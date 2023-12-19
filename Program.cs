@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineBookShop.ContextModels;
+using OnlineBookShop.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,9 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ShopContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Shop")));
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddScoped<IBooksRepository, BooksRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
