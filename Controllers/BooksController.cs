@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineBookShop.Models;
 using OnlineBookShop.Repositories;
@@ -12,14 +14,19 @@ namespace OnlineBookShop.Controllers
     {
         private readonly IBooksRepository _booksRepository;
         private readonly IMapper _mapper;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public BooksController(IBooksRepository booksRepository, IMapper mapper)
+        public BooksController(IBooksRepository booksRepository, IMapper mapper, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _booksRepository = booksRepository;
             _mapper = mapper;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         [HttpGet]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetBooks()
         {
             var books = await _booksRepository.GetBooksAsync();
@@ -27,6 +34,7 @@ namespace OnlineBookShop.Controllers
         }
 
         [HttpGet("{id}")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetBook(int id)
         {
             var book = await _booksRepository.GetBookAsync(id);
@@ -36,6 +44,7 @@ namespace OnlineBookShop.Controllers
         }
 
         [HttpPost]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> PostBook(BookDtoCreate bookDto)
         {
             var book = _mapper.Map<Book>(bookDto);
@@ -44,6 +53,7 @@ namespace OnlineBookShop.Controllers
         }
 
         [HttpPut]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> PutBook(int id, int newPrice)
         {
             var book = await _booksRepository.PutBookAsync(id, newPrice);
@@ -53,6 +63,7 @@ namespace OnlineBookShop.Controllers
         }
 
         [HttpDelete("{id}")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteBook(int id)
         {
             var ok = await _booksRepository.DeleteBookAsync(id);
