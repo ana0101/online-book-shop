@@ -44,9 +44,9 @@ namespace OnlineBookShop.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> PutBook(int id, string newDescription)
+        public async Task<IActionResult> PutBook(int id, int newPrice)
         {
-            var book = await _booksRepository.PutBookAsync(id, newDescription);
+            var book = await _booksRepository.PutBookAsync(id, newPrice);
             if (book == null)
                 return NotFound();
             return Ok(book);

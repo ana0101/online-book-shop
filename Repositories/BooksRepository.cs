@@ -33,12 +33,12 @@ namespace OnlineBookShop.Repositories
             return book;
         }
 
-        public async Task<Book>? PutBookAsync(int id, string newDescription)
+        public async Task<Book>? PutBookAsync(int id, int newPrice)
         {
             var book = await _shopContext.Books.FirstOrDefaultAsync(b => b.Id == id);
             if (book == null)
                 return null;
-            book.Description = newDescription;
+            book.Price = newPrice;
             _shopContext.Books.Update(book);
             await _shopContext.SaveChangesAsync();
             return book;
