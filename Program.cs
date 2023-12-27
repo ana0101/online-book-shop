@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using OnlineBookShop.ContextModels;
+using OnlineBookShop.Models;
 using OnlineBookShop.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    SeedData.Initialize(services);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
