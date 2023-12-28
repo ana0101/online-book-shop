@@ -1,4 +1,4 @@
-﻿using OnlineBookShop.Models;
+﻿using OnlineBookShop.Entities;
 
 namespace OnlineBookShop.Repositories
 {

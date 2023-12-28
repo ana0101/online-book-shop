@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineBookShop.ContextModels;
-using OnlineBookShop.Models;
+using OnlineBookShop.Entities;
 
 namespace OnlineBookShop.Repositories
 {

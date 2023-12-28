@@ -1,4 +1,4 @@
-﻿namespace OnlineBookShop.Models
+﻿namespace OnlineBookShop.Entities
 {
     public class Cart
     {

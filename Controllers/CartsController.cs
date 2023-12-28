@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using OnlineBookShop.Entities;
 using OnlineBookShop.Models;
 using OnlineBookShop.Repositories;
 

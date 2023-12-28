@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace OnlineBookShop.Models
+namespace OnlineBookShop.Entities
 {
     public class Book
     {

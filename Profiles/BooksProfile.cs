@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using OnlineBookShop.Entities;
 using OnlineBookShop.Models;
 
 namespace OnlineBookShop.Profiles

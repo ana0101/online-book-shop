@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineBookShop.ContextModels;
 
@@ -11,9 +12,11 @@ using OnlineBookShop.ContextModels;
 namespace OnlineBookShop.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    partial class ShopContextModelSnapshot : ModelSnapshot
+    [Migration("20231228091412_Roles")]
+    partial class Roles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,6 +50,29 @@ namespace OnlineBookShop.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "478123f9-900a-4f51-9bd4-e612164a1904",
+                            ConcurrencyStamp = "1",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "567347b1-c6bb-4e72-a9af-510484aa3381",
+                            ConcurrencyStamp = "2",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        },
+                        new
+                        {
+                            Id = "2df9dbdb-9734-4425-b7a9-508a059e1fdb",
+                            ConcurrencyStamp = "3",
+                            Name = "Visitor",
+                            NormalizedName = "VISITOR"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -229,7 +255,7 @@ namespace OnlineBookShop.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("OnlineBookShop.Entities.Book", b =>
+            modelBuilder.Entity("OnlineBookShop.Models.Book", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -253,7 +279,7 @@ namespace OnlineBookShop.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("OnlineBookShop.Entities.Cart", b =>
+            modelBuilder.Entity("OnlineBookShop.Models.Cart", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -280,13 +306,9 @@ namespace OnlineBookShop.Migrations
                     b.ToTable("Carts");
                 });
 
-            modelBuilder.Entity("OnlineBookShop.Entities.ApplicationUser", b =>
+            modelBuilder.Entity("OnlineBookShop.Models.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -346,15 +368,15 @@ namespace OnlineBookShop.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OnlineBookShop.Entities.Cart", b =>
+            modelBuilder.Entity("OnlineBookShop.Models.Cart", b =>
                 {
-                    b.HasOne("OnlineBookShop.Entities.ApplicationUser", "ApplicationUser")
+                    b.HasOne("OnlineBookShop.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("Carts")
                         .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("OnlineBookShop.Entities.Book", "Book")
+                    b.HasOne("OnlineBookShop.Models.Book", "Book")
                         .WithMany("Carts")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -365,12 +387,12 @@ namespace OnlineBookShop.Migrations
                     b.Navigation("Book");
                 });
 
-            modelBuilder.Entity("OnlineBookShop.Entities.Book", b =>
+            modelBuilder.Entity("OnlineBookShop.Models.Book", b =>
                 {
                     b.Navigation("Carts");
                 });
 
-            modelBuilder.Entity("OnlineBookShop.Entities.ApplicationUser", b =>
+            modelBuilder.Entity("OnlineBookShop.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Carts");
                 });

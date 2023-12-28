@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using OnlineBookShop.Entities;
 using OnlineBookShop.Models;
 using OnlineBookShop.Repositories;
 
@@ -26,7 +27,7 @@ namespace OnlineBookShop.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetBooks()
         {
             var books = await _booksRepository.GetBooksAsync();
@@ -34,7 +35,7 @@ namespace OnlineBookShop.Controllers
         }
 
         [HttpGet("{id}")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetBook(int id)
         {
             var book = await _booksRepository.GetBookAsync(id);
@@ -44,7 +45,7 @@ namespace OnlineBookShop.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PostBook(BookDtoCreate bookDto)
         {
             var book = _mapper.Map<Book>(bookDto);
@@ -53,7 +54,7 @@ namespace OnlineBookShop.Controllers
         }
 
         [HttpPut]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PutBook(int id, int newPrice)
         {
             var book = await _booksRepository.PutBookAsync(id, newPrice);
@@ -63,7 +64,7 @@ namespace OnlineBookShop.Controllers
         }
 
         [HttpDelete("{id}")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteBook(int id)
         {
             var ok = await _booksRepository.DeleteBookAsync(id);
