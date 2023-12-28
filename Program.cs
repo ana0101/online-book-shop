@@ -6,6 +6,7 @@ using Microsoft.OpenApi.Models;
 using OnlineBookShop.ContextModels;
 using OnlineBookShop.Entities;
 using OnlineBookShop.Repositories;
+using OnlineBookShop.Services;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -50,6 +51,7 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddControllers();
 
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IBooksRepository, BooksRepository>();
 builder.Services.AddScoped<ICartsRepository, CartsRepository>();
 
