@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { take } from 'rxjs';
+import { AuthResponse } from '../_interfaces/auth-response';
 
 @Component({
   selector: 'app-login-user',
@@ -20,6 +21,7 @@ export class LoginUserComponent implements OnInit {
   loginForm!: FormGroup;
   public errorMessage: string = '';
   public showError: boolean = false;
+  public invalidLogin: boolean = true;
 
   ngOnInit(): void {
       this.loginForm = new FormGroup({
@@ -34,14 +36,19 @@ export class LoginUserComponent implements OnInit {
       this.showError = true;
     }
     else {
-      this.http.post<FormGroup>(this.APIUrl, form.value).pipe(take(1)).subscribe({
-        next: (_) => {
+      this.http.post<AuthResponse>(this.APIUrl, form.value).pipe(take(1)).subscribe({
+        next: (respone: AuthResponse) => {
+          const token = respone.token;
+          localStorage.setItem("jwt", token);
+          this.invalidLogin = false;
           console.log("Successful login");
+          console.log(token);
           this.router.navigate(['/']);
         },
         error: (err: HttpErrorResponse) => {
           this.errorMessage = err.error.message;
           this.showError = true;
+          this.invalidLogin = true;
         }
       })
     }
