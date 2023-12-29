@@ -15,7 +15,7 @@ namespace OnlineBookShop.Repositories
 
         public async Task<IEnumerable<Cart>> GetCartsAsync(string applicationUserId)
         {
-            var carts = await _shopContext.Carts.Where(c => c.ApplicationUserId == applicationUserId).ToListAsync();
+            var carts = await _shopContext.Carts.Where(c => c.ApplicationUserId == applicationUserId).Include(c => c.Book).ToListAsync();
             return carts;
         }
 
