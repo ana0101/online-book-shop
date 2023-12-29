@@ -1,0 +1,33 @@
+<h3>Register</h3>
+<form (ngSubmit)="registerUser(registerForm)" [formGroup]="registerForm">
+    <div>
+        <label>First Name: </label>
+        <input formControlName="firstName" />
+    </div>
+
+    <div>
+        <label>Last Name: </label>
+        <input formControlName="lastName" />
+    </div>
+
+    <div>
+        <label>Username: </label>
+        <input formControlName="userName" />
+    </div>
+
+    <div>
+        <label>Email: </label>
+        <input formControlName="email" />
+    </div>
+
+    <div>
+        <label>Password: </label>
+        <input formControlName="password" />
+    </div>
+
+    <input type="submit" value="Register">
+
+    <div *ngIf="showError" class="alert alert-danger" role="alert">
+        <span [innerHTML]="errorMessage"></span>
+    </div>
+</form>
