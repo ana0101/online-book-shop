@@ -11,5 +11,7 @@ namespace OnlineBookShop.Entities
 
         [JsonIgnore]
         public ICollection<Cart> Carts { get; set; }
+        [JsonIgnore]
+        public ICollection<Order> Orders { get; set; }
     }
 }

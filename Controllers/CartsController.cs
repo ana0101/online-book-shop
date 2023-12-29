@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineBookShop.Entities;
 using OnlineBookShop.Models;
@@ -20,14 +21,16 @@ namespace OnlineBookShop.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetCarts()
+        [HttpGet("user/{applicationUserId}")]
+        //[Authorize(Roles = "User")]
+        public async Task<IActionResult> GetCarts(string applicationUserId)
         {
-            var carts = await _cartsRepository.GetCartsAsync();
+            var carts = await _cartsRepository.GetCartsAsync(applicationUserId);
             return Ok(carts);
         }
 
         [HttpGet("{id}")]
+        //[Authorize(Roles = "User")]
         public async Task<IActionResult> GetCart(int id)
         {
             var cart = await _cartsRepository.GetCartAsync(id);
@@ -37,6 +40,7 @@ namespace OnlineBookShop.Controllers
         }
 
         [HttpPost]
+        //[Authorize(Roles = "User")]
         public async Task<IActionResult> PostCart(CartDto cartDto)
         {
             var cart = _mapper.Map<Cart>(cartDto);
@@ -45,6 +49,7 @@ namespace OnlineBookShop.Controllers
         }
 
         [HttpPut]
+        //[Authorize(Roles = "User")]
         public async Task<IActionResult> PutCart(int id, int newQuantity)
         {
             var cart = await _cartsRepository.PutCartAsync(id, newQuantity);
@@ -54,6 +59,7 @@ namespace OnlineBookShop.Controllers
         }
 
         [HttpDelete("{id}")]
+        //[Authorize(Roles = "User")]
         public async Task<IActionResult> DeleteCart(int id)
         {
             var ok = await _cartsRepository.DeleteCartAsync(id);

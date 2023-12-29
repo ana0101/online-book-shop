@@ -28,13 +28,15 @@ namespace OnlineBookShop.Controllers
             var user = await _userManager.FindByEmailAsync(loginUser.Email);
             if (user == null)
             {
-                return Unauthorized("There is no registered user with this email");
+                return StatusCode(StatusCodes.Status404NotFound,
+                    new Response { Status = "Error", Message = "There is no registered user with this email" });
             }
 
             // check the password
             if (!await _userManager.CheckPasswordAsync(user, loginUser.Password))
             {
-                return Unauthorized("Incorrect password");
+                return StatusCode(StatusCodes.Status401Unauthorized,
+                    new Response { Status = "Error", Message = "Incorrect password" });
             }
 
             var token = await _authenticationService.Login(user);
