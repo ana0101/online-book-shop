@@ -11,11 +11,11 @@ import { CommonModule } from '@angular/common';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
-  readonly APIUrl="https://localhost:7202/api/Books/";
+  readonly APIUrl = "https://localhost:7202/api/Books/";
 
   constructor(private http:HttpClient) {}
 
-  books: any=[];
+  books: any = [];
   getBooks() {
     this.http.get(this.APIUrl).subscribe(data => {
       this.books = data;

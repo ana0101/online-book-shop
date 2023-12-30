@@ -1,6 +1,7 @@
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router'; 
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,20 +10,17 @@ import { CommonModule } from '@angular/common';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent {
-  constructor(private jwtHelper: JwtHelperService) {}
+export class NavbarComponent implements OnInit {
+  constructor(private authenticationService: AuthenticationService, private router: Router) {}
 
   ngOnInit(): void {}
 
   isUserAuthenticated = (): boolean => {
-    const token = localStorage.getItem("jwt");
-    if (token && !this.jwtHelper.isTokenExpired(token)){
-      return true;
-    }
-    return false;
+    return this.authenticationService.isAuthenticated();
   }
 
   logOut = () => {
     localStorage.removeItem("jwt");
+    this.router.navigate(['/']); 
   }
 }

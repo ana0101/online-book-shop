@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using OnlineBookShop.Entities;
 using OnlineBookShop.Models;
@@ -9,6 +10,7 @@ namespace OnlineBookShop.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[EnableCors("_myAllowSpecificOrigins")]
 
     public class CartsController : ControllerBase
     {
@@ -22,7 +24,7 @@ namespace OnlineBookShop.Controllers
         }
 
         [HttpGet("user/{applicationUserId}")]
-        //[Authorize(Roles = "User")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> GetCarts(string applicationUserId)
         {
             var carts = await _cartsRepository.GetCartsAsync(applicationUserId);

@@ -1,11 +1,11 @@
-import { JwtModule, JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { AuthGuard } from './auth.guard';
 import { NgModule } from '@angular/core';
-//import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { ErrorHandlerService } from './services/error-handler.service';
-import { AuthGuard } from './auth.guard';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
@@ -14,26 +14,15 @@ export function tokenGetter() {
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    //BrowserModule,
+    BrowserModule,
     HttpClientModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: tokenGetter,
-        allowedDomains: ['localhost:4200'],
-        disallowedRoutes: [],
-      },
-    }),
+    FormsModule,
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorHandlerService,
       multi: true,
-    },
-    JwtHelperService,
-    {
-      provide: JWT_OPTIONS,
-      useValue: JWT_OPTIONS,
     },
     AuthGuard,
   ],

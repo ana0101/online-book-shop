@@ -42,7 +42,7 @@ namespace OnlineBookShop.Services
 
             var authClaims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, applicationUser.Email),
+                new Claim(ClaimTypes.Name, applicationUser.Id),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 

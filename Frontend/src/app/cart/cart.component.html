@@ -1,1 +1,6 @@
-<p>cart works!</p>
+<h3 *ngFor="let cart of carts">
+    <b>{{ cart.book.title }}</b>
+    <p>By {{ cart.book.author }}</p>
+    <p>{{ cart.book.price }} euros</p>
+    <p>Quantity: {{ cart.quantity }}</p>
+</h3>
