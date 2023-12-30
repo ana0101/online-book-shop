@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineBookShop.ContextModels;
 
@@ -11,9 +12,11 @@ using OnlineBookShop.ContextModels;
 namespace OnlineBookShop.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    partial class ShopContextModelSnapshot : ModelSnapshot
+    [Migration("20231230111449_DeleteCart")]
+    partial class DeleteCart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -253,26 +256,6 @@ namespace OnlineBookShop.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("OnlineBookShop.Entities.Cart", b =>
-                {
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnOrder(0);
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(1);
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("ApplicationUserId", "BookId");
-
-                    b.HasIndex("BookId");
-
-                    b.ToTable("Carts");
-                });
-
             modelBuilder.Entity("OnlineBookShop.Entities.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -373,25 +356,6 @@ namespace OnlineBookShop.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OnlineBookShop.Entities.Cart", b =>
-                {
-                    b.HasOne("OnlineBookShop.Entities.ApplicationUser", "ApplicationUser")
-                        .WithMany("Carts")
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("OnlineBookShop.Entities.Book", "Book")
-                        .WithMany("Carts")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationUser");
-
-                    b.Navigation("Book");
-                });
-
             modelBuilder.Entity("OnlineBookShop.Entities.Order", b =>
                 {
                     b.HasOne("OnlineBookShop.Entities.ApplicationUser", "ApplicationUser")
@@ -403,15 +367,8 @@ namespace OnlineBookShop.Migrations
                     b.Navigation("ApplicationUser");
                 });
 
-            modelBuilder.Entity("OnlineBookShop.Entities.Book", b =>
-                {
-                    b.Navigation("Carts");
-                });
-
             modelBuilder.Entity("OnlineBookShop.Entities.ApplicationUser", b =>
                 {
-                    b.Navigation("Carts");
-
                     b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineBookShop.ContextModels;
 using OnlineBookShop.Entities;
+using System.Diagnostics;
 
 namespace OnlineBookShop.Repositories
 {
@@ -19,10 +20,12 @@ namespace OnlineBookShop.Repositories
             return carts;
         }
 
-        public async Task<Cart>? GetCartAsync(int id)
+        public async Task<int> GetQuantityAsync(string applicationUserId, int bookId)
         {
-            var cart = await _shopContext.Carts.FirstOrDefaultAsync(c => c.Id == id);
-            return cart;
+            var cart = await _shopContext.Carts.FirstOrDefaultAsync(c => c.ApplicationUserId == applicationUserId && c.BookId == bookId);
+            if (cart == null)
+                return 0;
+            return cart.Quantity;
         }
 
         public async Task<Cart> PostCartAsync(Cart cart)
@@ -32,9 +35,9 @@ namespace OnlineBookShop.Repositories
             return cart;
         }
 
-        public async Task<Cart>? PutCartAsync(int id, int newQuantity)
+        public async Task<Cart>? PutCartAsync(string applicationUserId, int bookId, int newQuantity)
         {
-            var cart = await _shopContext.Carts.FirstOrDefaultAsync(c => c.Id == id);
+            var cart = await _shopContext.Carts.FirstOrDefaultAsync(c => c.ApplicationUserId == applicationUserId && c.BookId == bookId);
             if (cart == null)
                 return null;
             cart.Quantity = newQuantity;
@@ -43,9 +46,9 @@ namespace OnlineBookShop.Repositories
             return cart;
         }
 
-        public async Task<Boolean> DeleteCartAsync(int id)
+        public async Task<Boolean> DeleteCartAsync(string applicationUserId, int bookId)
         {
-            var cart = _shopContext.Carts.FirstOrDefault(c => c.Id == id);
+            var cart = await _shopContext.Carts.FirstOrDefaultAsync(c => c.ApplicationUserId == applicationUserId && c.BookId == bookId);
             if (cart == null)
                 return false;
             _shopContext.Remove(cart);

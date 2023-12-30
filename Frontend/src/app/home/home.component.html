@@ -2,4 +2,5 @@
     <b>{{ book.title }}</b>
     <p>By {{ book.author }}</p>
     <p>{{ book.price }} euros</p>
+    <input type="button" value="Add to cart" (click)="addToCart(book.id)">
 </h3>

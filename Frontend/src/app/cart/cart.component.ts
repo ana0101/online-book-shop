@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -26,7 +26,7 @@ export class CartComponent implements OnInit {
         'Authorization': `Bearer ${token}`
       });
 
-      this.http.get(url, { headers }).subscribe(data => {
+      this.http.get(url, {headers}).subscribe(data => {
         this.carts = data;
       });
     }
@@ -34,14 +34,8 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     const token = localStorage.getItem("jwt");
-    
+    const userId = localStorage.getItem("userId") ?? '';
     if (token) {
-      let payload;
-      payload = token.split(".")[1];
-      payload = window.atob(payload);
-      const parsedPayload = JSON.parse(payload);
-      const userId = parsedPayload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
-      console.log(userId);
       this.getCarts(userId);
     }
   }

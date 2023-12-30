@@ -4,10 +4,10 @@ namespace OnlineBookShop.Repositories
 {
     public interface ICartsRepository
     {
-        public Task<IEnumerable<Cart>> GetCartsAsync(string ApplicationUserId);
-        public Task<Cart>? GetCartAsync(int id);
+        public Task<IEnumerable<Cart>> GetCartsAsync(string applicationUserId);
+        public Task<int> GetQuantityAsync(string applicationUserId, int bookId);
         public Task<Cart> PostCartAsync(Cart cart);
-        public Task<Cart>? PutCartAsync(int id, int newQuantity);
-        public Task<Boolean> DeleteCartAsync(int id);
+        public Task<Cart>? PutCartAsync(string applicationUserId, int bookId, int newQuantity);
+        public Task<Boolean> DeleteCartAsync(string applicationUserId, int bookId);
     }
 }
