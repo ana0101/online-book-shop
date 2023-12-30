@@ -2,5 +2,9 @@
     <b>{{ cart.book.title }}</b>
     <p>By {{ cart.book.author }}</p>
     <p>{{ cart.book.price }} euros</p>
-    <p>Quantity: {{ cart.quantity }}</p>
+    <div>
+        <label>Quantity: </label>
+        <input type="number" step="1" min="1" max="10" name="quantity" class="quantity" [(ngModel)]="cart.quantity" (ngModelChange)="updateQuantity(cart.book.id, cart.quantity)">
+    </div>
+    <input type="button" value="Remove from cart" (click)="deleteCart(cart.book.id)">
 </h3>

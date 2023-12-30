@@ -12,7 +12,7 @@ namespace OnlineBookShop.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[EnableCors("_myAllowSpecificOrigins")]
+    [EnableCors("_myAllowSpecificOrigins")]
 
     public class CartsController : ControllerBase
     {

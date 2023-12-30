@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
           const newQuantity = quantity + 1;
           url = `${this.APIUrl}Carts/${userId}/${bookId}/${newQuantity}`;
           console.log(newQuantity);
-          this.http.put<number>(url, {headers}).subscribe();
+          this.http.put<number>(url, newQuantity, {headers}).subscribe();
         }
         else {
           // add the new cart
