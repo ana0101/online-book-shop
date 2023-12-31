@@ -54,6 +54,9 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IBooksRepository, BooksRepository>();
 builder.Services.AddScoped<ICartsRepository, CartsRepository>();
+builder.Services.AddScoped<IOrdersRepository, OrdersRepository>();
+builder.Services.AddScoped<IBookOrdersRepository, BookOrdersRepository>();
+builder.Services.AddScoped<IPaymentsRepository, PaymentsRepository>();
 
 builder.Services.AddEndpointsApiExplorer();
 

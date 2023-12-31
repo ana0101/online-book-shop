@@ -1,6 +1,6 @@
-<h3 *ngFor="let book of books">
+<h3 *ngFor="let book of this.bookService.books">
     <b>{{ book.title }}</b>
     <p>By {{ book.author }}</p>
     <p>{{ book.price }} euros</p>
-    <input type="button" value="Add to cart" (click)="addToCart(book.id)">
+    <input type="button" value="Add to cart" (click)="this.bookService.addToCart(book.id)">
 </h3>

@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -13,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 export class CartComponent implements OnInit {
   readonly APIUrl = "https://localhost:7202/api/Carts/";
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   carts: any = [];
 
@@ -62,6 +63,10 @@ export class CartComponent implements OnInit {
         this.getCarts(userId);
       });
     }
+  }
+
+  goToOrder() {
+    this.router.navigate(['order']);
   }
 
   ngOnInit(): void {

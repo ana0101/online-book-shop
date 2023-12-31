@@ -10,6 +10,7 @@ namespace OnlineBookShop.ContextModels
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Cart>().HasKey(c => new { c.ApplicationUserId, c.BookId });
+            modelBuilder.Entity<BookOrder>().HasKey(bo => new { bo.OrderId, bo.BookId });
             base.OnModelCreating(modelBuilder);
         }
 
@@ -17,6 +18,8 @@ namespace OnlineBookShop.ContextModels
         public DbSet<Book> Books { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<BookOrder> BookOrders { get; set; }
+        public DbSet<Payment> Payments { get; set; }
 
         public ShopContext(DbContextOptions<ShopContext> options) : base(options) { }
     }

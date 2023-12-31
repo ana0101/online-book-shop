@@ -1,4 +1,6 @@
-﻿namespace OnlineBookShop.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace OnlineBookShop.Entities
 {
     public class Order
     {
@@ -9,5 +11,10 @@
         public string City { get; set; }
         public string Address { get; set; }
         public string Status { get; set; }
+
+        [JsonIgnore]
+        public ICollection<BookOrder> BookOrders { get; set; }
+
+        public Payment Payment { get; set; }
     }
 }

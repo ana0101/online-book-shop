@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineBookShop.ContextModels;
 
@@ -11,9 +12,11 @@ using OnlineBookShop.ContextModels;
 namespace OnlineBookShop.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    partial class ShopContextModelSnapshot : ModelSnapshot
+    [Migration("20231231120653_ForgotPriceAndQuantity")]
+    partial class ForgotPriceAndQuantity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -330,32 +333,6 @@ namespace OnlineBookShop.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("OnlineBookShop.Entities.Payment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Total")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId")
-                        .IsUnique();
-
-                    b.ToTable("Payments");
-                });
-
             modelBuilder.Entity("OnlineBookShop.Entities.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -471,17 +448,6 @@ namespace OnlineBookShop.Migrations
                     b.Navigation("ApplicationUser");
                 });
 
-            modelBuilder.Entity("OnlineBookShop.Entities.Payment", b =>
-                {
-                    b.HasOne("OnlineBookShop.Entities.Order", "Order")
-                        .WithOne("Payment")
-                        .HasForeignKey("OnlineBookShop.Entities.Payment", "OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-                });
-
             modelBuilder.Entity("OnlineBookShop.Entities.Book", b =>
                 {
                     b.Navigation("BookOrders");
@@ -492,9 +458,6 @@ namespace OnlineBookShop.Migrations
             modelBuilder.Entity("OnlineBookShop.Entities.Order", b =>
                 {
                     b.Navigation("BookOrders");
-
-                    b.Navigation("Payment")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("OnlineBookShop.Entities.ApplicationUser", b =>

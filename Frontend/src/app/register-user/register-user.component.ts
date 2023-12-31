@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
   styleUrl: './register-user.component.scss'
 })
 export class RegisterUserComponent implements OnInit {
-  readonly APIUrl="https://localhost:7202/api/Authentication/register/";
+  readonly APIUrl = "https://localhost:7202/api/Authentication/register/";
 
   constructor(private http: HttpClient, private router: Router) {}
 

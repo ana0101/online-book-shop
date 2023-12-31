@@ -19,11 +19,6 @@ namespace OnlineBookShop.Repositories
             return orders;
         }
 
-        public async Task<Order?> GetOrderAsync(int id)
-        {
-            var order = await _shopContext.Orders.FirstOrDefaultAsync(o => o.Id == id);
-            return order;
-        }
 
         public async Task<Order> PostOrderAsync(Order order)
         {
