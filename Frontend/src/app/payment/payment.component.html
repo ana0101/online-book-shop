@@ -1,0 +1,17 @@
+<h3>Payment details</h3>
+<h4>Total: {{ total }} euros</h4>
+
+<form (ngSubmit)="placeOrder(paymentForm)" [formGroup]="paymentForm">
+    <label for="type">Payment method: </label>
+    <select formControlName="type" name="type" id="type">
+        <option value="credit card">Credit card</option>
+        <option value="debit card">Debit card</option>
+        <option value="cash">Cash (on delivery)</option>
+    </select>
+
+    <input type="submit" value="Place order">
+
+    <div *ngIf="showError" class="alert alert-danger" role="alert">
+        <span [innerHTML]="errorMessage"></span>
+    </div>
+</form>

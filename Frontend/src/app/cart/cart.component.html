@@ -1,4 +1,4 @@
-<h3 *ngFor="let cart of carts">
+<h3 *ngFor="let cart of carts$ | async">
     <b>{{ cart.book.title }}</b>
     <p>By {{ cart.book.author }}</p>
     <p>{{ cart.book.price }} euros</p>

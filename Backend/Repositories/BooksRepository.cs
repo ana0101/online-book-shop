@@ -25,6 +25,14 @@ namespace OnlineBookShop.Repositories
             return book;
         }
 
+        public async Task<int> GetBookPrice(int id)
+        {
+            var book = await _shopContext.Books.FirstOrDefaultAsync(b => b.Id == id);
+            if (book == null)
+                return 0;
+            return book.Price;
+        }
+
         public async Task<Book> PostBookAsync(Book book)
         {
             _shopContext.Books.Add(book);

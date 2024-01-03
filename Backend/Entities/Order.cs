@@ -12,9 +12,8 @@ namespace OnlineBookShop.Entities
         public string Address { get; set; }
         public string Status { get; set; }
 
-        [JsonIgnore]
-        public ICollection<BookOrder> BookOrders { get; set; }
+        public ICollection<BookOrder>? BookOrders { get; set; }
 
-        public Payment Payment { get; set; }
+        public Payment? Payment { get; set; }
     }
 }

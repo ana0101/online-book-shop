@@ -5,6 +5,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { Router } from '@angular/router';
 import { take } from 'rxjs';
 import { AuthResponse } from '../_interfaces/auth-response';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-login-user',
@@ -14,9 +15,8 @@ import { AuthResponse } from '../_interfaces/auth-response';
   styleUrl: './login-user.component.scss'
 })
 export class LoginUserComponent implements OnInit {
-  readonly APIUrl="https://localhost:7202/api/Authentication/login/";
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private loginService: LoginService, private router: Router) {}
 
   loginForm!: FormGroup;
   public errorMessage: string = '';
@@ -36,7 +36,7 @@ export class LoginUserComponent implements OnInit {
       this.showError = true;
     }
     else {
-      this.http.post<AuthResponse>(this.APIUrl, form.value).pipe(take(1)).subscribe({
+      this.loginService.login(form.value).pipe(take(1)).subscribe({
         next: (respone: AuthResponse) => {
           const token = respone.token;
           localStorage.setItem("jwt", token);
@@ -51,6 +51,7 @@ export class LoginUserComponent implements OnInit {
           this.invalidLogin = false;
           console.log("Successful login");
           console.log(token);
+
           this.router.navigate(['/']);
         },
         error: (err: HttpErrorResponse) => {
@@ -58,7 +59,7 @@ export class LoginUserComponent implements OnInit {
           this.showError = true;
           this.invalidLogin = true;
         }
-      })
+      });
     }
   }
 }

@@ -44,6 +44,13 @@ namespace OnlineBookShop.Controllers
             return Ok(book);
         }
 
+        [HttpGet("price/{id}")]
+        public async Task<int> GetBookPrice(int id)
+        {
+            var price = await _booksRepository.GetBookPrice(id);
+            return price;
+        }
+
         [HttpPost]
         //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> PostBook(BookDtoCreate bookDto)

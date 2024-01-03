@@ -6,6 +6,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { take } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { RegisterService } from '../services/register.service';
 
 @Component({
   selector: 'app-register-user',
@@ -17,7 +18,7 @@ import { Router } from '@angular/router';
 export class RegisterUserComponent implements OnInit {
   readonly APIUrl = "https://localhost:7202/api/Authentication/register/";
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private registerService: RegisterService, private router: Router) {}
 
   registerForm!: FormGroup;
   public errorMessage: string = '';
@@ -39,7 +40,7 @@ export class RegisterUserComponent implements OnInit {
       this.showError = true;
     }
     else {
-      this.http.post<FormGroup>(this.APIUrl, form.value).pipe(take(1)).subscribe({
+      this.registerService.register(form.value).pipe(take(1)).subscribe({
         next: (_) => {
           console.log("Successful registration");
           this.router.navigate(['/login']);

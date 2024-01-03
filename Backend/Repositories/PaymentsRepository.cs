@@ -21,6 +21,7 @@ namespace OnlineBookShop.Repositories
 
         public async Task<Payment> PostPaymentAsync(Payment payment)
         {
+            await _shopContext.SaveChangesAsync();
             _shopContext.Payments.Add(payment);
             await _shopContext.SaveChangesAsync();
             return payment;

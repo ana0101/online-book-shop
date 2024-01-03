@@ -3,6 +3,10 @@ import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CartService } from '../services/cart.service';
+import { AuthenticationService } from '../services/authentication.service';
+import { Cart } from '../_interfaces/cart';
+import { Observable, take } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
@@ -12,56 +16,30 @@ import { Router } from '@angular/router';
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit {
-  readonly APIUrl = "https://localhost:7202/api/Carts/";
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private router: Router, private cartService: CartService, private authService: AuthenticationService) {}
 
-  carts: any = [];
+  carts$: Observable<Cart[]> = new Observable<Cart[]>();
 
   getCarts(userId: string) {
-    const url = `${this.APIUrl}user/${userId}`;
-
-    const token = localStorage.getItem("jwt");
-
-    if (token) {
-      const headers = new HttpHeaders({
-        'Authorization': `Bearer ${token}`
-      });
-
-      this.http.get(url, {headers}).subscribe(data => {
-        this.carts = data;
-      });
+    if (this.authService.isAuthenticated()) {
+      this.carts$ = this.cartService.getCarts(userId);
     }
   }
 
   updateQuantity(bookId: number, newQuantity: number) {
-    const token = localStorage.getItem("jwt");
-    const userId = localStorage.getItem("userId") ?? '';
-    const url = `${this.APIUrl}${userId}/${bookId}/${newQuantity}`;
-
-    if (token) {
-      const headers = new HttpHeaders({
-        'Authorization': `Bearer ${token}`
-      });
-
-      this.http.put<number>(url, newQuantity, {headers}).subscribe();
+    if (this.authService.isAuthenticated()) {
+      const userId = localStorage.getItem("userId") ?? '';
+      this.cartService.updateQuantity(userId, bookId, newQuantity).pipe(take(1)).subscribe();
     }
   }
 
   deleteCart(bookId: number) {
-    console.log("delete cart");
-    const token = localStorage.getItem("jwt");
-    const userId = localStorage.getItem("userId") ?? '';
-    const url = `${this.APIUrl}${userId}/${bookId}`;
-
-    if (token) {
-      const headers = new HttpHeaders({
-        'Authorization': `Bearer ${token}`
-      });
-
-      this.http.delete(url, {headers}).subscribe(() => {
-        this.getCarts(userId);
-      });
+    if (this.authService.isAuthenticated()) {
+      const userId = localStorage.getItem("userId") ?? '';
+      this.cartService.deleteCart(userId, bookId).pipe(take(1)).subscribe(() => {
+        this.getCarts(localStorage.getItem("userId") ?? '');
+      })
     }
   }
 

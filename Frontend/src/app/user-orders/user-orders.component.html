@@ -1,0 +1,18 @@
+<h1>My orders: </h1>
+<h3 *ngFor="let userOrder of orders">
+    <h2>Order: </h2>
+        <h3>Books: </h3>
+        <div *ngFor="let bookOrder of userOrder.bookOrders">
+            <p>{{ bookOrder.book.title }}</p>
+            <p>By {{ bookOrder.book.author }}</p>
+            <p>Price: {{ bookOrder.price }}</p>
+            <p>Quantity: {{ bookOrder.quantity }}</p>
+            <p>...</p>
+        </div>
+        <h3>Total: {{ userOrder.payment.total }} euros</h3>
+        <p>Date placed: {{ userOrder.date }}</p>
+        <h3>Delivery details:</h3>
+            <p>City: {{ userOrder.city }}</p>
+            <p>Address: {{ userOrder.address }}</p>
+        <p>Order status: {{ userOrder.status }}</p>
+</h3>

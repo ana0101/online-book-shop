@@ -55,5 +55,15 @@ namespace OnlineBookShop.Repositories
             await _shopContext.SaveChangesAsync();
             return true;
         }
+
+        public async Task<Boolean> DeleteCartsAsync(string applicationUserId)
+        {
+            var carts = await _shopContext.Carts.Where(c => c.ApplicationUserId == applicationUserId).ToListAsync();
+            if (carts == null || carts.Count == 0)
+                return false;
+            _shopContext.RemoveRange(carts);
+            await _shopContext.SaveChangesAsync();
+            return true;
+        }
     }
 }

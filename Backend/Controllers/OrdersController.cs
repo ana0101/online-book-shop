@@ -35,7 +35,7 @@ namespace OnlineBookShop.Controllers
         {
             var order = _mapper.Map<Order>(orderDto);
             await _ordersRepository.PostOrderAsync(order);
-            return Ok(order);
+            return Ok(order.Id);
         }
 
         [HttpPut("{id}/{newStatus}")]

@@ -1,0 +1,18 @@
+<h3>Delivery order details</h3>
+<form (ngSubmit)="createOrder(orderForm)" [formGroup]="orderForm">
+    <div>
+        <label>City: </label>
+        <input formControlName="city"/>
+    </div>
+
+    <div>
+        <label>Address: </label>
+        <input formControlName="address"/>
+    </div>
+
+    <input type="submit" value="Next step">
+
+    <div *ngIf="showError" class="alert alert-danger" role="alert">
+        <span [innerHTML]="errorMessage"></span>
+    </div>
+</form>

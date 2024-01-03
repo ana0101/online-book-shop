@@ -8,7 +8,7 @@ namespace OnlineBookShop.Models
     {
         public int OrderId { get; set; }
         public int BookId { get; set; }
-        public int price;
-        public int quantity;
+        public int Price { get; set; }
+        public int Quantity { get; set; }
     }
 }

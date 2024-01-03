@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineBookShop.ContextModels;
 using OnlineBookShop.Entities;
+using System.Linq;
 
 namespace OnlineBookShop.Repositories
 {
@@ -13,12 +14,12 @@ namespace OnlineBookShop.Repositories
             _shopContext = shopContext;
         }
 
-        public async Task<IEnumerable<Order>> GetOrdersAsync(string appplicationUserId)
+        public async Task<IEnumerable<Order>> GetOrdersAsync(string applicationUserId)
         {
-            var orders = await _shopContext.Orders.Where(o => o.ApplicationUserId == appplicationUserId).ToListAsync();
+            var orders = await _shopContext.Orders.Where(o => o.ApplicationUserId == applicationUserId).Include(o => o.BookOrders)
+            .ThenInclude(bo => bo.Book).Include(o => o.Payment).ToListAsync();
             return orders;
         }
-
 
         public async Task<Order> PostOrderAsync(Order order)
         {

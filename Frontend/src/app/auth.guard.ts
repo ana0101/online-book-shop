@@ -21,4 +21,17 @@ export class AuthGuard {
       return this.router.createUrlTree(['/login']);
     }
   }
+
+  canActivateAdmin(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree>
+    | boolean
+    | UrlTree {
+    if (this.authenticationService.isAdmin()) {
+      return true;
+    }
+    else {
+      return this.router.createUrlTree(['/login']);
+    }
+  }
 }

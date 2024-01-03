@@ -32,14 +32,14 @@ namespace OnlineBookShop.Controllers
             var carts = await _cartsRepository.GetCartsAsync(applicationUserId);
             return Ok(carts);
         }
-            
-         [HttpGet("{applicationUserId}/{bookId}")]
-         [Authorize(Roles = "User")]
-         public async Task<int> GetQuantity(string applicationUserId, int bookId)
-         {
-             var quantity = await _cartsRepository.GetQuantityAsync(applicationUserId, bookId);
-             return quantity;
-         }
+
+        [HttpGet("{applicationUserId}/{bookId}")]
+        [Authorize(Roles = "User")]
+        public async Task<int> GetQuantity(string applicationUserId, int bookId)
+        {
+            var quantity = await _cartsRepository.GetQuantityAsync(applicationUserId, bookId);
+            return quantity;
+        }
 
         [HttpPost]
         [Authorize(Roles = "User")]
@@ -68,6 +68,14 @@ namespace OnlineBookShop.Controllers
             if (ok == false)
                 return NotFound();
             return NoContent();
+        }
+
+        [HttpDelete("{applicationUserId}")]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> DeleteCarts(string applicationUserId)
+        {
+            await _cartsRepository.DeleteCartsAsync(applicationUserId);
+            return Ok();
         }
     }
 }

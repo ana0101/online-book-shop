@@ -9,5 +9,6 @@ namespace OnlineBookShop.Repositories
         public Task<Cart> PostCartAsync(Cart cart);
         public Task<Cart>? PutCartAsync(string applicationUserId, int bookId, int newQuantity);
         public Task<Boolean> DeleteCartAsync(string applicationUserId, int bookId);
+        public Task<Boolean> DeleteCartsAsync(string applicationUserId);
     }
 }
