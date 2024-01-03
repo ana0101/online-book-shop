@@ -8,6 +8,7 @@ namespace OnlineBookShop.Services
 {
     public interface IAuthenticationService
     {
+        public Task<IEnumerable<ApplicationUser>> GetUsers();
         public JwtSecurityToken GetToken(List<Claim> authClaims);
         public Task<JwtSecurityToken> Login(ApplicationUser applicationUser);
         public Task<ApplicationUser?> RegisterUser([FromBody] CreateUser createUser);

@@ -21,6 +21,22 @@ namespace OnlineBookShop.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetAllOrdersGroupedByUser()
+        {
+            var orders = await _ordersRepository.GetAllOrdersGroupedByUserAsync();
+            return Ok(orders);
+        }
+
+        [HttpGet("status/{status}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetStatusOrdersGroupedByUser(string status)
+        {
+            var orders = await _ordersRepository.GetStatusOrdersGroupedByUserAsync(status);
+            return Ok(orders);
+        }
+
         [HttpGet("{applicationUserId}")]
         [Authorize(Roles = "User")]
         public async Task<IActionResult> GetOrders(string applicationUserId)
@@ -44,7 +60,8 @@ namespace OnlineBookShop.Controllers
         {
             var order = await _ordersRepository.PutOrderAsync(id, newStatus);
             if (order == null)
-                return NotFound();
+                return StatusCode(StatusCodes.Status404NotFound,
+                    new Response { Status = "Error", Message = "There is no order with this id" });
             return Ok(order);
         }
 

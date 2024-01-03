@@ -19,6 +19,40 @@ namespace OnlineBookShop.Repositories
             return books;
         }
 
+        public async Task<IEnumerable<Book>> GetBooksSortedByTitleAsync(Boolean order)
+        {
+            if (order)
+            {
+                var books = await _shopContext.Books.OrderBy(b => b.Title).ToListAsync();
+                return books;
+            }
+            else
+            {
+                var books = await _shopContext.Books.OrderByDescending(b => b.Title).ToListAsync();
+                return books;
+            }
+        }
+
+        public async Task<IEnumerable<Book>> GetBooksSortedByPriceAsync(Boolean order)
+        {
+            if (order)
+            {
+                var books = await _shopContext.Books.OrderBy(b => b.Price).ToListAsync();
+                return books;
+            }
+            else
+            {
+                var books = await _shopContext.Books.OrderByDescending(b => b.Price).ToListAsync();
+                return books;
+            }
+        }
+
+        public async Task<IEnumerable<Book>> GetBooksSearchAsync(string search)
+        {
+            var books = await _shopContext.Books.Where(b => EF.Functions.Like(b.Title, $"%{search}%") || EF.Functions.Like(b.Author, $"%{search}%")).ToListAsync();
+            return books;
+        }
+
         public async Task<Book>? GetBookAsync(int id)
         {
             var book = await _shopContext.Books.FirstOrDefaultAsync(b => b.Id == id);

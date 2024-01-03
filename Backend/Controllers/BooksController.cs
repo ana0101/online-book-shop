@@ -27,15 +27,34 @@ namespace OnlineBookShop.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetBooks()
         {
             var books = await _booksRepository.GetBooksAsync();
             return Ok(books);
         }
 
+        [HttpGet("sortTitle/{order}")]
+        public async Task<IActionResult> GetBooksSortedByTitle(Boolean order)
+        {
+            var books = await _booksRepository.GetBooksSortedByTitleAsync(order);
+            return Ok(books);
+        }
+
+        [HttpGet("sortPrice/{order}")]
+        public async Task<IActionResult> GetBooksSortedByPrice(Boolean order)
+        {
+            var books = await _booksRepository.GetBooksSortedByPriceAsync(order);
+            return Ok(books);
+        }
+
+        [HttpGet("search/{search}")]
+        public async Task<IActionResult> GetBooksSearch(string search)
+        {
+            var books = await _booksRepository.GetBooksSearchAsync(search);
+            return Ok(books);
+        }
+
         [HttpGet("{id}")]
-        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetBook(int id)
         {
             var book = await _booksRepository.GetBookAsync(id);
@@ -52,7 +71,7 @@ namespace OnlineBookShop.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PostBook(BookDtoCreate bookDto)
         {
             var book = _mapper.Map<Book>(bookDto);
@@ -60,23 +79,25 @@ namespace OnlineBookShop.Controllers
             return Ok(book);
         }
 
-        [HttpPut]
-        //[Authorize(Roles = "Admin")]
+        [HttpPut("{id}/{newPrice}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PutBook(int id, int newPrice)
         {
             var book = await _booksRepository.PutBookAsync(id, newPrice);
             if (book == null)
-                return NotFound();
+                return StatusCode(StatusCodes.Status404NotFound,
+                    new Response { Status = "Error", Message = "There is no book with this id" });
             return Ok(book);
         }
 
         [HttpDelete("{id}")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteBook(int id)
         {
             var ok = await _booksRepository.DeleteBookAsync(id);
             if (ok == false)
-                return NotFound();
+                return StatusCode(StatusCodes.Status404NotFound,
+                    new Response { Status = "Error", Message = "There is no book with this id" });
             return NoContent();
         }
     }

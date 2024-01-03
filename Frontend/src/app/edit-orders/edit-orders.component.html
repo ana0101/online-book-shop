@@ -1,0 +1,56 @@
+<h3>Update the status of an order: </h3>
+<form (ngSubmit)="updateOrderStatus(updateStatusForm)" [formGroup]="updateStatusForm">
+    <div>
+        <label>Id: </label>
+        <input formControlName="id" />
+    </div>
+
+    <div>
+        <label for="newStatus">New status: </label>
+        <select formControlName="newStatus" name="newStatus" id="newStatus">
+            <option value="placed">Placed</option>
+            <option value="shipping">Shipping</option>
+            <option value="done">Done</option>
+        </select>
+    </div>
+
+    <input type="submit" value="Update status">
+
+    <div *ngIf="showMessage" class="alert alert-message" role="alert">
+        <span [innerHTML]="message"></span>
+    </div>
+</form>
+
+
+<form>
+    <label for="status">Show only orders with this status: </label>
+    <select id="status" (change)="getStatusOrdersGroupedByUser($event)">
+        <option value="placed">Placed</option>
+        <option value="shipping">Shipping</option>
+        <option value="done">Done</option>
+    </select>
+</form>
+
+
+<div *ngFor="let userOrders of orders">
+    <h3>User ID: {{ userOrders.key }}</h3>
+    <ul>
+      <li *ngFor="let order of userOrders.value">
+        <h2>Order ID: {{ order.id }} </h2>
+        <h3>Books: </h3>
+        <div *ngFor="let bookOrder of order.bookOrders">
+            <p>{{ bookOrder.book.title }}</p>
+            <p>By {{ bookOrder.book.author }}</p>
+            <p>Price: {{ bookOrder.price }}</p>
+            <p>Quantity: {{ bookOrder.quantity }}</p>
+            <p>...</p>
+        </div>
+        <h3>Total: {{ order.payment.total }} euros</h3>
+        <p>Date placed: {{ order.date }}</p>
+        <h3>Delivery details:</h3>
+            <p>City: {{ order.city }}</p>
+            <p>Address: {{ order.address }}</p>
+        <p>Order status: {{ order.status }}</p>
+      </li>
+    </ul>
+  </div>

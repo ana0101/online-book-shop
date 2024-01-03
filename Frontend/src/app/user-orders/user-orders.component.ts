@@ -1,7 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UserOrder } from '../_interfaces/user-orders';
 import { CommonModule } from '@angular/common';
+import { OrderService } from '../services/order.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-orders',
@@ -11,34 +12,22 @@ import { CommonModule } from '@angular/common';
   styleUrl: './user-orders.component.scss'
 })
 export class UserOrdersComponent implements OnInit {
-  readonly APIUrl = "https://localhost:7202/api/Orders/";
 
-  constructor(private http: HttpClient) {}
+  constructor(private orderService: OrderService) {}
 
   orders: UserOrder[] = [];
 
-  getOrders(userId: string) {
-    const url = `${this.APIUrl}${userId}`;
-
-    const token = localStorage.getItem("jwt");
-
-    if (token) {
-      const headers = new HttpHeaders({
-        'Authorization': `Bearer ${token}`
-      });
-
-      this.http.get<UserOrder[]>(url, {headers}).subscribe(data => {
-        this.orders = data;
-        console.log(this.orders);
-      });
-    }
+  getUserOrders(userId: string) {
+    this.orderService.getUserOrders(userId).subscribe((data: UserOrder[]) => {
+      this.orders = data;
+    });
   }
 
   ngOnInit(): void {
     const token = localStorage.getItem("jwt");
-    const userId = localStorage.getItem("userId") ?? '';
+    const userId = localStorage.getItem("userId") || '';
     if (token) {
-      this.getOrders(userId);
+      this.getUserOrders(userId);
     }
   }
 }

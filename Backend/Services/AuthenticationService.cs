@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using OnlineBookShop.ContextModels;
 using OnlineBookShop.Entities;
 using OnlineBookShop.Entities.Authentication;
 using System.IdentityModel.Tokens.Jwt;
@@ -13,12 +15,20 @@ namespace OnlineBookShop.Services
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
+        private readonly ShopContext _shopContext;
 
-        public AuthenticationService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public AuthenticationService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, ShopContext shopContext)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
+            _shopContext = shopContext;
+        }
+
+        public async Task<IEnumerable<ApplicationUser>> GetUsers()
+        {
+            var users = await _shopContext.ApplicationUsers.ToListAsync();
+            return users;
         }
 
         public JwtSecurityToken GetToken(List<Claim> authClaims)

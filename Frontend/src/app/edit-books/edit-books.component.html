@@ -1,0 +1,66 @@
+<h3>Add a book: </h3>
+<form (ngSubmit)="createBook(createBookForm)" [formGroup]="createBookForm">
+    <div>
+        <label>Title: </label>
+        <input formControlName="title" />
+    </div>
+
+    <div>
+        <label>Author: </label>
+        <input formControlName="author" />
+    </div>
+
+    <div>
+        <label>Price: </label>
+        <input formControlName="price" type="number" step="1" min="1" max="100" />
+    </div>
+
+    <input type="submit" value="Add book">
+
+    <div *ngIf="showCreateMessage" class="alert alert-message" role="alert">
+        <span [innerHTML]="createMessage"></span>
+    </div>
+</form>
+
+
+<h3>Change the price of a book: </h3>
+<form (ngSubmit)="updateBookPrice(updateBookPriceForm)" [formGroup]="updateBookPriceForm">
+    <div>
+        <label>Id: </label>
+        <input formControlName="id" />
+    </div>
+
+    <div>
+        <label>New price: </label>
+        <input formControlName="price" type="number" step="1" min="1" max="100" />
+    </div>
+
+    <input type="submit" value="Update price">
+
+    <div *ngIf="showUpdateMessage" class="alert alert-message" role="alert">
+        <span [innerHTML]="updateMessage"></span>
+    </div>
+</form>
+
+
+<h3>Delete a book: </h3>
+<form (ngSubmit)="deleteBook(deleteBookForm)" [formGroup]="deleteBookForm">
+    <div>
+        <label>Id: </label>
+        <input formControlName="id" />
+    </div>
+
+    <input type="submit" value="Delete book">
+
+    <div *ngIf="showDeleteMessage" class="alert alert-message" role="alert">
+        <span [innerHTML]="deleteMessage"></span>
+    </div>
+</form>
+
+
+<h3 *ngFor="let book of books$ | async">
+    <p>Id: {{ book.id }}</p>
+    <p>{{ book.title }}</p>
+    <p>By {{ book.author }}</p>
+    <p>{{ book.price }} euros</p>
+</h3>

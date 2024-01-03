@@ -20,6 +20,14 @@ namespace OnlineBookShop.Controllers
             _authenticationService = authenticationService;
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetUsersAsync()
+        {
+            var users = await _authenticationService.GetUsers();
+            return Ok(users);
+        }
+
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginUser loginUser)

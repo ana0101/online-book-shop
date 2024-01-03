@@ -1,3 +1,18 @@
+<form>
+    <label for="sortType">Sort by: </label>
+    <select id="sortType" (change)="sortBooks($event)">
+        <option value="title-asc">Title ascending</option>
+        <option value="title-desc">Title descending</option>
+        <option value="price-asc">Price ascending</option>
+        <option value="price-desc">Price descending</option>
+    </select>
+</form>
+
+<form>
+    <label for="search">Search: </label>
+    <input type="text" id="search" placeholder="Search by title or author" (input)="searchBooks($event)">
+</form>
+
 <h3 *ngFor="let book of books$ | async">
     <b>{{ book.title }}</b>
     <p>By {{ book.author }}</p>

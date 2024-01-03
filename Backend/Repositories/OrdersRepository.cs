@@ -14,6 +14,20 @@ namespace OnlineBookShop.Repositories
             _shopContext = shopContext;
         }
 
+        public async Task<Dictionary<string, List<Order>>> GetAllOrdersGroupedByUserAsync()
+        {
+            var orders = await _shopContext.Orders.Include(o => o.BookOrders).ThenInclude(bo => bo.Book).Include(o => o.Payment).ToListAsync();
+            var groupedOrders = orders.GroupBy(o => o.ApplicationUserId).ToDictionary(group => group.Key, group => group.ToList());
+            return groupedOrders;
+        }
+
+        public async Task<Dictionary<string, List<Order>>> GetStatusOrdersGroupedByUserAsync(string status)
+        {
+            var orders = await _shopContext.Orders.Where(o => o.Status == status).Include(o => o.BookOrders).ThenInclude(bo => bo.Book).Include(o => o.Payment).ToListAsync();
+            var groupedOrders = orders.GroupBy(o => o.ApplicationUserId).ToDictionary(group => group.Key, group => group.ToList());
+            return groupedOrders;
+        }
+
         public async Task<IEnumerable<Order>> GetOrdersAsync(string applicationUserId)
         {
             var orders = await _shopContext.Orders.Where(o => o.ApplicationUserId == applicationUserId).Include(o => o.BookOrders)

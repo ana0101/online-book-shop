@@ -19,6 +19,10 @@ export class NavbarComponent implements OnInit {
     return this.authenticationService.isAuthenticated();
   }
 
+  isAdmin = (): boolean => {
+    return this.authenticationService.isAdmin();
+  }
+
   logOut = () => {
     localStorage.removeItem("jwt");
     localStorage.removeItem("userId");

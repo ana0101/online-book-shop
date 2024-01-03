@@ -1,4 +1,4 @@
-export interface Order {
+export interface OrderDto {
     applicationUserId: string;
     date: Date;
     city: string;

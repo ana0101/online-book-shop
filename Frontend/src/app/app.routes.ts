@@ -7,6 +7,8 @@ import { AuthGuard } from './auth.guard';
 import { OrderComponent } from './order/order.component';
 import { PaymentComponent } from './payment/payment.component';
 import { UserOrdersComponent } from './user-orders/user-orders.component';
+import { EditBooksComponent } from './edit-books/edit-books.component';
+import { EditOrdersComponent } from './edit-orders/edit-orders.component';
 
 export const routes: Routes = [
     {
@@ -23,18 +25,38 @@ export const routes: Routes = [
     },
     {
         path: "cart",
-        component: CartComponent, canActivate: [AuthGuard]
+        component: CartComponent,
+        canActivate: [AuthGuard],
+        data: { role: "User" }
     },
     {
         path: "order",
-        component: OrderComponent, canActivate: [AuthGuard]
+        component: OrderComponent,
+        canActivate: [AuthGuard],
+        data: { role: "User" } 
     },
     {
         path: "payment",
-        component: PaymentComponent, canActivate: [AuthGuard]
+        component: PaymentComponent,
+        canActivate: [AuthGuard],
+        data: { role: "User" } 
     },
     {
         path: "user-orders",
-        component: UserOrdersComponent, canActivate: [AuthGuard]
+        component: UserOrdersComponent,
+        canActivate: [AuthGuard],
+        data: { role: "User" } 
+    },
+    {
+        path: "edit-books",
+        component: EditBooksComponent,
+        canActivate: [AuthGuard],
+        data: { role: "Admin" } 
+    },
+    {
+        path: "edit-orders",
+        component: EditOrdersComponent,
+        canActivate: [AuthGuard],
+        data: { role: "Admin" } 
     }
 ];

@@ -2,8 +2,9 @@
     <li><a href="/">Home</a></li>
     <li><a href="cart">Cart</a></li>
     <li><a href="user-orders">My orders</a></li>
+    <li *ngIf="isAdmin()"><a href="/edit-books">Edit books</a></li>
+    <li *ngIf="isAdmin()"><a href="/edit-orders">Edit orders</a></li>
     <li><a href="register">Register</a></li>
     <li *ngIf="!isUserAuthenticated()"><a href="/login">Login</a></li>
     <li *ngIf="isUserAuthenticated()"><a class="logout" (click)="logOut()">Log out</a></li>
-    <li><a href="#">Contact</a></li>
 </ul>

@@ -26,6 +26,17 @@ export class HomeComponent implements OnInit {
     this.books$ = this.bookService.getBooks();
   }
 
+  sortBooks(event: Event) {
+    var sortType = (event.target as HTMLSelectElement).value;
+    this.books$ = this.bookService.getBooksSorted(sortType);
+  }
+
+  searchBooks(event: any) {
+    const search = event.target.value;
+    console.log(search);
+    this.books$ = this.bookService.getBooksSearch(search);
+  }
+
   addToCart(bookId: number) {
     if (this.authService.isAuthenticated()) {
 

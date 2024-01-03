@@ -9,29 +9,13 @@ import { AuthenticationService } from "./services/authentication.service";
 export class AuthGuard {
   constructor(private authenticationService: AuthenticationService, private router: Router) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    const requiredRole = route.data["role"] as string; 
     if (this.authenticationService.isAuthenticated()) {
-      return true;
+      if (requiredRole === "User" || (requiredRole === "Admin" && this.authenticationService.isAdmin())) {
+        return true;
+      }
     }
-    else {
-      return this.router.createUrlTree(['/login']);
-    }
-  }
-
-  canActivateAdmin(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
-    if (this.authenticationService.isAdmin()) {
-      return true;
-    }
-    else {
-      return this.router.createUrlTree(['/login']);
-    }
+    return this.router.createUrlTree(['/login']);
   }
 }

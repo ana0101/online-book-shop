@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Cart } from '../_interfaces/cart';
-import { Order } from '../_interfaces/order';
+import { OrderDto } from '../_interfaces/order-dto';
 import { CommonModule } from '@angular/common';
 import { Payment } from '../_interfaces/payment';
 import { CartService } from '../services/cart.service';
@@ -65,7 +65,7 @@ export class PaymentComponent implements OnInit {
       const userId = localStorage.getItem("userId") ?? '';
 
       // call create order
-      const order: Order = {
+      const order: OrderDto = {
         applicationUserId: userId || '',
         date: new Date(),
         city: localStorage.getItem("city") || '',

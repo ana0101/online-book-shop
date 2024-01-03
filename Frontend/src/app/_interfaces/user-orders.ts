@@ -1,7 +1,7 @@
 import { Book } from "./book";
-import { Order } from "./order"
 
 export interface UserOrder {
+    id: number;
     date: Date;
     city: string;
     address: string;

@@ -20,7 +20,6 @@ export class AuthenticationService {
       payload = window.atob(payload);
       const parsedPayload = JSON.parse(payload);
       const roles = parsedPayload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-      console.log(roles);
       if (roles.includes("Admin")) {
         return true;
       }
