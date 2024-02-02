@@ -8,9 +8,9 @@
     <div>
         <label for="newStatus">New status: </label>
         <select formControlName="newStatus" name="newStatus" id="newStatus">
-            <option value="Placed">Placed</option>
-            <option value="Shipping">Shipping</option>
-            <option value="Done">Done</option>
+            <option value=0>Placed</option>
+            <option value=1>Shipping</option>
+            <option value=2>Done</option>
         </select>
     </div>
 
@@ -25,10 +25,10 @@
 <form>
     <label for="status">Show orders with this status: </label>
     <select id="status" (change)="getStatusOrdersGroupedByUser($event)">
-        <option value="Placed">Placed</option>
-        <option value="Shipping">Shipping</option>
-        <option value="Done">Done</option>
-        <option value="All">All</option>
+        <option value=3>All</option>
+        <option value=0>Placed</option>
+        <option value=1>Shipping</option>
+        <option value=2>Done</option>
     </select>
 </form>
 

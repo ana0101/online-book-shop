@@ -21,7 +21,7 @@ namespace OnlineBookShop.Repositories
             return groupedOrders;
         }
 
-        public async Task<Dictionary<string, List<Order>>> GetStatusOrdersGroupedByUserAsync(string status)
+        public async Task<Dictionary<string, List<Order>>> GetStatusOrdersGroupedByUserAsync(OrderStatus status)
         {
             var orders = await _shopContext.Orders.Where(o => o.Status == status).Include(o => o.BookOrders).ThenInclude(bo => bo.Book).Include(o => o.Payment).ToListAsync();
             var groupedOrders = orders.GroupBy(o => o.ApplicationUserId).ToDictionary(group => group.Key, group => group.ToList());
@@ -42,7 +42,7 @@ namespace OnlineBookShop.Repositories
             return order;
         }
 
-        public async Task<Order?> PutOrderAsync(int id, string newStatus)
+        public async Task<Order?> PutOrderAsync(int id, OrderStatus newStatus)
         {
             var order = await _shopContext.Orders.FirstOrDefaultAsync(o => o.Id == id);
             if (order == null)

@@ -31,7 +31,7 @@ namespace OnlineBookShop.Controllers
 
         [HttpGet("status/{status}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> GetStatusOrdersGroupedByUser(string status)
+        public async Task<IActionResult> GetStatusOrdersGroupedByUser(OrderStatus status)
         {
             var orders = await _ordersRepository.GetStatusOrdersGroupedByUserAsync(status);
             return Ok(orders);
@@ -56,7 +56,7 @@ namespace OnlineBookShop.Controllers
 
         [HttpPut("{id}/{newStatus}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> PutOrder(int id, string newStatus)
+        public async Task<IActionResult> PutOrder(int id, OrderStatus newStatus)
         {
             var order = await _ordersRepository.PutOrderAsync(id, newStatus);
             if (order == null)

@@ -36,7 +36,7 @@ export class EditOrdersComponent implements OnInit {
 
   getStatusOrdersGroupedByUser(event: Event) {
     var status = (event.target as HTMLSelectElement).value;
-    if (status.toLowerCase() == "all") {
+    if (status == "3") {
       this.getAllOrdersGroupedByUser();
     }
     else {

@@ -1,4 +1,5 @@
 ﻿using OnlineBookShop.Entities;
+using System.Text.Json.Serialization;
 
 namespace OnlineBookShop.Models
 {
@@ -6,6 +7,8 @@ namespace OnlineBookShop.Models
     {
         public int OrderId { get; set; }
         public float Total {  get; set; }
-        public string Type { get; set; }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public PaymentType Type { get; set; }
     }
 }

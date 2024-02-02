@@ -1,4 +1,5 @@
 ﻿using OnlineBookShop.Entities;
+using System.Text.Json.Serialization;
 
 namespace OnlineBookShop.Models
 {
@@ -8,6 +9,8 @@ namespace OnlineBookShop.Models
         public DateTime Date { get; set; }
         public string City { get; set; }
         public string Address { get; set; }
-        public string Status { get; set; }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public OrderStatus Status { get; set; }
     }
 }

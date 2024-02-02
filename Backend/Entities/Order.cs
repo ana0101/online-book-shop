@@ -2,6 +2,13 @@
 
 namespace OnlineBookShop.Entities
 {
+    public enum OrderStatus
+    {
+        Placed,
+        Shipping,
+        Done
+    }
+
     public class Order
     {
         public int Id { get; set; }
@@ -10,7 +17,9 @@ namespace OnlineBookShop.Entities
         public DateTime Date {  get; set; }
         public string City { get; set; }
         public string Address { get; set; }
-        public string Status { get; set; }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public OrderStatus Status { get; set; }
 
         public ICollection<BookOrder>? BookOrders { get; set; }
 
