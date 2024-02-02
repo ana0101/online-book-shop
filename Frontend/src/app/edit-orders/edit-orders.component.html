@@ -44,7 +44,7 @@
             <p>Quantity: {{ bookOrder.quantity }}</p>
         </div>
         <p>Total: {{ order.payment.total }} euros</p>
-        <p>Date placed: {{ order.date }}</p>
+        <p>Date placed: {{ order.date | date: 'medium' }}</p>
         <p>Delivery city: {{ order.city }}</p>
         <p>Delivery address: {{ order.address }}</p>
         <p>Order status: {{ order.status }}</p>

@@ -5,11 +5,13 @@ import { UserOrder } from '../_interfaces/user-orders';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-edit-orders',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  providers: [DatePipe],
   templateUrl: './edit-orders.component.html',
   styleUrl: './edit-orders.component.scss'
 })

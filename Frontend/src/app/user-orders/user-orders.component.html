@@ -8,7 +8,7 @@
             <p>Quantity: {{ bookOrder.quantity }}</p>
         </div>
         <p>Total: {{ userOrder.payment.total }} euros</p>
-        <p>Date placed: {{ userOrder.date }}</p>
+        <p>Date placed: {{ userOrder.date | date: 'medium' }}</p>
         <p>Delivery city: {{ userOrder.city }}</p>
         <p>Delivery address: {{ userOrder.address }}</p>
         <p>Order status: {{ userOrder.status }}</p>

@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { UserOrder } from '../_interfaces/user-orders';
 import { CommonModule } from '@angular/common';
 import { OrderService } from '../services/order.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-user-orders',
   standalone: true,
   imports: [CommonModule],
+  providers: [DatePipe],
   templateUrl: './user-orders.component.html',
   styleUrl: './user-orders.component.scss'
 })
