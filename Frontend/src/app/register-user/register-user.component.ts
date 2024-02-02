@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CreateUser } from '../_interfaces/create-user';
-import { AuthenticationService } from '../services/authentication.service';
-import { Form, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 import { take } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -42,7 +40,6 @@ export class RegisterUserComponent implements OnInit {
     else {
       this.registerService.register(form.value).pipe(take(1)).subscribe({
         next: (_) => {
-          console.log("Successful registration");
           this.router.navigate(['/login']);
         },
         error: (err: HttpErrorResponse) => {

@@ -20,17 +20,16 @@ namespace OnlineBookShop.Controllers
             _authenticationService = authenticationService;
         }
 
-        [HttpGet]
+        [HttpGet("{role}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> GetUsersAsync()
+        public async Task<IActionResult> GetAllUsersAsync(string role)
         {
-            var users = await _authenticationService.GetUsers();
+            var users = await _authenticationService.GetUsers(role);
             return Ok(users);
         }
 
-        [HttpPost]
-        [Route("login")]
-        public async Task<IActionResult> Login([FromBody] LoginUser loginUser)
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginAsync([FromBody] LoginUser loginUser)
         {
             // check if the user exists
             var user = await _userManager.FindByEmailAsync(loginUser.Email);
@@ -59,7 +58,7 @@ namespace OnlineBookShop.Controllers
         // register a new user
         [HttpPost]
         [Route("register")]
-        public async Task<IActionResult> RegisterUser([FromBody] CreateUser createUser)
+        public async Task<IActionResult> RegisterUserAsync([FromBody] CreateUser createUser)
         {
             // check if the user already exists
             var user = await _userManager.FindByEmailAsync(createUser.Email);
@@ -88,36 +87,30 @@ namespace OnlineBookShop.Controllers
                     new Response { Status = "Success", Message = "User created successfully" });
         }
 
-        [HttpPost]
-        [Route("register-admin")]
+        [HttpPut("promote-to-admin/{email}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> RegisterAdmin([FromBody] CreateUser createUser)
+        public async Task<IActionResult> PromoteUserToAdminAsync(string email)
         {
-            // check if the user already exists
-            var user = await _userManager.FindByEmailAsync(createUser.Email);
-            if (user != null)
+            // check if the user exists
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
             {
-                return StatusCode(StatusCodes.Status409Conflict,
-                    new Response { Status = "Error", Message = "There already exists a registered user with this email" });
+                return StatusCode(StatusCodes.Status404NotFound,
+                    new Response { Status = "Error", Message = "There is no registered user with this email" });
             }
 
-            // create the user
-            ApplicationUser applicationUser =await  _authenticationService.RegisterAdmin(createUser);
-
-            if (applicationUser == null)
+            // check if the user is already an admin
+            var isAdmin = await _userManager.IsInRoleAsync(user, Roles.Admin);
+            if (isAdmin)
             {
                 return StatusCode(StatusCodes.Status400BadRequest,
-                    new Response
-                    {
-                        Status = "Error",
-                        Message = "Error creating user. Please check that the fields are properly filled. " +
-                        "The password must contain an uppercase character, lowercase character, a digit, and a non-alphanumeric character and " +
-                        "must be at leat six characters long"
-                    });
+                    new Response { Status = "Error", Message = "This user is already an admin" });
             }
 
-            return StatusCode(StatusCodes.Status201Created,
-                    new Response { Status = "Success", Message = "Admin created successfully" });
+            // add the admin role
+            await _authenticationService.PromoteUserToAdmin(user);
+
+            return Ok(user);
         }
     }
 }

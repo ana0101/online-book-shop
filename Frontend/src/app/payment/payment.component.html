@@ -4,14 +4,21 @@
 <form (ngSubmit)="placeOrder(paymentForm)" [formGroup]="paymentForm">
     <label for="type">Payment method: </label>
     <select formControlName="type" name="type" id="type">
-        <option value="credit card">Credit card</option>
-        <option value="debit card">Debit card</option>
-        <option value="cash">Cash (on delivery)</option>
+        <option value="Credit card">Credit card</option>
+        <option value="Debit card">Debit card</option>
+        <option value="Cash">Cash (on delivery)</option>
     </select>
 
     <input type="submit" value="Place order">
 
-    <div *ngIf="showError" class="alert alert-danger" role="alert">
+    <div *ngIf="showError" class="error-message">
         <span [innerHTML]="errorMessage"></span>
     </div>
 </form>
+
+<div *ngIf="showSuccessMessage" class="success-message-div">
+    <div class="success-message">
+        <span [innerHTML]="successMessage"></span>
+        <button (click)="hideSuccessMessage()">OK</button>
+    </div>
+</div>

@@ -12,7 +12,7 @@ import { BookDto } from '../_interfaces/book-dto';
 })
 export class BookService {
 
-  constructor(private http:HttpClient, private router: Router, private authenticationService: AuthenticationService) {}
+  constructor(private http: HttpClient, private router: Router, private authenticationService: AuthenticationService) {}
 
   readonly APIUrl = "https://localhost:7202/api/Books/";
 

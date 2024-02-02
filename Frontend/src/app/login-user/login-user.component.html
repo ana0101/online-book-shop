@@ -12,7 +12,7 @@
 
     <input type="submit" value="Login">
 
-    <div *ngIf="showError" class="alert alert-danger" role="alert">
+    <div *ngIf="showErrorMessage" class="error-message">
         <span [innerHTML]="errorMessage"></span>
     </div>
 </form>

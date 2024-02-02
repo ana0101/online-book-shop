@@ -18,7 +18,7 @@ namespace OnlineBookShop.Entities
         public Order? Order { get; set; }
         public Book? Book { get; set; }
         // because the price of a book can change, I have to memorize the price at which the book was bought
-        public int Price { get; set; }
+        public float Price { get; set; }
         public int Quantity { get; set; }
     }
 }

@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { BookService } from '../services/book.service';
-import { AuthenticationService } from '../services/authentication.service';
 import { Observable, take } from 'rxjs';
 import { Book } from '../_interfaces/book';
 import { CommonModule } from '@angular/common';
@@ -17,7 +15,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class EditBooksComponent implements OnInit {
   
-  constructor(private router: Router, private bookService: BookService, private authService: AuthenticationService) {}
+  constructor(private bookService: BookService) {}
 
   books$: Observable<Book[]> = new Observable<Book[]>();
   createBookForm!: FormGroup;
@@ -29,6 +27,12 @@ export class EditBooksComponent implements OnInit {
   public showUpdateMessage: boolean = false;
   public deleteMessage: string = '';
   public showDeleteMessage: boolean = false;
+  public successMessage: string = '';
+  public showSuccessMessage: boolean = false;
+
+  hideSuccessMessage(): void {
+    this.showSuccessMessage = false;
+  }
 
   getBooks() {
     this.books$ = this.bookService.getBooks();
@@ -38,11 +42,14 @@ export class EditBooksComponent implements OnInit {
     if (form.invalid) {
       this.createMessage = "Invalid form";
       this.showCreateMessage = true;
+      setTimeout(() => {
+        this.showCreateMessage = false;
+      }, 3000);
     }
     else {
       this.bookService.createBook(form.value).pipe(take(1)).subscribe(() => {
-        this.createMessage = "Book added succesfully";
-        this.showCreateMessage = true;
+        this.successMessage = "Book added successfully";
+        this.showSuccessMessage = true;
         this.getBooks();
       })
     }
@@ -52,19 +59,25 @@ export class EditBooksComponent implements OnInit {
     if (form.invalid) {
       this.updateMessage = "Invalid form";
       this.showUpdateMessage = true;
+      setTimeout(() => {
+        this.showUpdateMessage = false;
+      }, 3000);
     }
     else {
       const bookId = form.get('id')?.value;
       const newPrice = form.get('price')?.value;
       this.bookService.updateBookPrice(bookId, newPrice).pipe(take(1)).subscribe({
         next: () => {
-          this.updateMessage = "Price updated succesfully";
-          this.showUpdateMessage = true;
+          this.successMessage = "Book price updated successfully";
+          this.showSuccessMessage = true;
           this.getBooks();
         },
         error: (err: HttpErrorResponse) => {
           this.updateMessage = err.error.message;
           this.showUpdateMessage = true;
+          setTimeout(() => {
+            this.showUpdateMessage = false;
+          }, 3000);
         }
       });
     }
@@ -74,18 +87,24 @@ export class EditBooksComponent implements OnInit {
     if (form.invalid) {
       this.deleteMessage = "Invalid form";
       this.showDeleteMessage = true;
+      setTimeout(() => {
+        this.showDeleteMessage = false;
+      }, 3000);
     }
     else {
       const bookId = form.get('id')?.value;
       this.bookService.deleteBook(bookId).pipe(take(1)).subscribe({
         next: () => {
-          this.deleteMessage = "Book deleted succesfully";
-          this.showDeleteMessage = true;
+          this.successMessage = "Book deleted successfully";
+          this.showSuccessMessage = true;
           this.getBooks();
         },
         error: (err: HttpErrorResponse) => {
           this.deleteMessage = err.error.message;
           this.showDeleteMessage = true;
+          setTimeout(() => {
+            this.showDeleteMessage = false;
+          }, 3000);
         }
       });
     }

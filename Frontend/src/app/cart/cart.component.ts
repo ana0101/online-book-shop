@@ -1,5 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -20,6 +19,8 @@ export class CartComponent implements OnInit {
   constructor(private router: Router, private cartService: CartService, private authService: AuthenticationService) {}
 
   carts$: Observable<Cart[]> = new Observable<Cart[]>();
+  emptyMessage: string = '';
+  empty: boolean = false;
 
   getCarts(userId: string) {
     if (this.authService.isAuthenticated()) {
@@ -44,7 +45,19 @@ export class CartComponent implements OnInit {
   }
 
   goToOrder() {
-    this.router.navigate(['order']);
+    // go to order only if at least one item in cart
+    this.carts$.pipe(take(1)).subscribe(carts => {
+      if (carts && carts.length > 0) {
+        this.router.navigate(['order']);
+      } 
+      else {
+        this.emptyMessage = "Your cart is empty"
+        this.empty = true;
+        setTimeout(() => {
+          this.empty = false;
+        }, 3000);
+      }
+    });
   }
 
   ngOnInit(): void {

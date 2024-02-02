@@ -9,7 +9,7 @@ namespace OnlineBookShop.Entities
 
         [JsonIgnore]
         public Order? Order { get; set; }
-        public int Total { get; set; }
+        public float Total { get; set; }
         public string Type { get; set; }
     }
 }

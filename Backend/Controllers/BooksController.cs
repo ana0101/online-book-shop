@@ -15,15 +15,11 @@ namespace OnlineBookShop.Controllers
     {
         private readonly IBooksRepository _booksRepository;
         private readonly IMapper _mapper;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public BooksController(IBooksRepository booksRepository, IMapper mapper, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public BooksController(IBooksRepository booksRepository, IMapper mapper)
         {
             _booksRepository = booksRepository;
             _mapper = mapper;
-            _userManager = userManager;
-            _roleManager = roleManager;
         }
 
         [HttpGet]
@@ -64,7 +60,7 @@ namespace OnlineBookShop.Controllers
         }
 
         [HttpGet("price/{id}")]
-        public async Task<int> GetBookPrice(int id)
+        public async Task<float> GetBookPrice(int id)
         {
             var price = await _booksRepository.GetBookPrice(id);
             return price;
@@ -81,7 +77,7 @@ namespace OnlineBookShop.Controllers
 
         [HttpPut("{id}/{newPrice}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> PutBook(int id, int newPrice)
+        public async Task<IActionResult> PutBook(int id, float newPrice)
         {
             var book = await _booksRepository.PutBookAsync(id, newPrice);
             if (book == null)

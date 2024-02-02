@@ -1,0 +1,65 @@
+h3 {
+  font-size: 1.5em;
+  padding: 0.5%;
+  margin: 0.5%;
+}
+
+form {
+  width: 60%;
+  padding: 1%;
+  margin-left: 1%;
+  margin-bottom: 1%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
+  div {
+    margin-bottom: 1%;
+    display: flex;
+    flex-flow: column;
+
+    label {
+      margin-bottom: 0.5%;
+    }
+
+    input {
+      padding: 0.5%;
+    }
+  }
+
+  input[type="submit"] {
+    background-color: #5bc0de;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 2%;
+    width: 10%;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #46b8da;
+  }
+}
+
+#editBooksDiv {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  padding: 1%;
+
+  h3 {
+    width: 20%;
+    border: 1px solid #ccc;
+    border-radius: 2%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    padding: 1%;
+    display: flex;
+    flex-flow: column;
+  }
+
+  p {
+    padding: 0.5%;
+    margin: 1%;
+  }
+}

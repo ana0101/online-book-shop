@@ -1,1 +1,98 @@
-/* You can add global styles to this file, and also import other style files */
+.success-message-div {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+
+  .success-message {
+    position: relative;
+    color: white;
+    background-color: #f8f8f8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1%;
+    border: 1px solid #ccc; 
+    border-radius: 5px;
+    box-shadow: 0 0 5px black;
+    color: black;
+    font-size: 1.2em;
+  }
+
+  button {
+    margin: 5%;
+    padding: 1%;
+    width: 50%;
+    background-color: #5cb85c; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+  }
+
+  button:hover {
+    background-color: #45a845;
+  }
+}
+
+.error-message {
+  margin-top: 15px;
+  padding: 10px;
+  border: 1px solid;
+  border-radius: 5px;
+  background-color: #d9534f;
+  color: white;
+  border-color: #d43f3a;
+}
+
+
+form {
+  display: flex;
+  flex-flow: column;
+  width: 60%;
+  padding: 1%;
+  margin-left: 1%;
+  margin-bottom: 1%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  background-color: #f8f8f8;
+
+  div {
+    margin-bottom: 1%;
+    display: flex;
+    flex-flow: column;
+  }
+
+  label {
+    margin-bottom: 0.5%;
+  }
+
+  input, select {
+    padding: 0.5%;
+  }
+
+  input[type="submit"] {
+    background-color: #5bc0de;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    width: 15%;
+    margin-top: 1%;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #46b8da;
+  }
+}

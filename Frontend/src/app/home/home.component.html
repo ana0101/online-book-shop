@@ -13,9 +13,18 @@
     <input type="text" id="search" placeholder="Search by title or author" (input)="searchBooks($event)">
 </form>
 
-<h3 *ngFor="let book of books$ | async">
-    <b>{{ book.title }}</b>
-    <p>By {{ book.author }}</p>
-    <p>{{ book.price }} euros</p>
-    <input type="button" value="Add to cart" (click)="addToCart(book.id)">
-</h3>
+<div *ngIf="showSuccessMessage" class="success-message-div">
+    <div class="success-message">
+        <span [innerHTML]="successMessage"></span>
+        <button (click)="hideSuccessMessage()">OK</button>
+    </div>
+</div>
+
+<div id="bookDiv">
+    <h3 *ngFor="let book of books$ | async">
+        <b>{{ book.title }}</b>
+        <p>By {{ book.author }}</p>
+        <p>{{ book.price }} euros</p>
+        <input type="button" value="Add to cart" (click)="addToCart(book.id)">
+    </h3>
+</div>

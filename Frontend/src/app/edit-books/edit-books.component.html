@@ -1,4 +1,4 @@
-<h3>Add a book: </h3>
+<h3>Add a book </h3>
 <form (ngSubmit)="createBook(createBookForm)" [formGroup]="createBookForm">
     <div>
         <label>Title: </label>
@@ -17,13 +17,13 @@
 
     <input type="submit" value="Add book">
 
-    <div *ngIf="showCreateMessage" class="alert alert-message" role="alert">
+    <div *ngIf="showCreateMessage" class="error-message">
         <span [innerHTML]="createMessage"></span>
     </div>
 </form>
 
 
-<h3>Change the price of a book: </h3>
+<h3>Change the price of a book </h3>
 <form (ngSubmit)="updateBookPrice(updateBookPriceForm)" [formGroup]="updateBookPriceForm">
     <div>
         <label>Id: </label>
@@ -37,13 +37,13 @@
 
     <input type="submit" value="Update price">
 
-    <div *ngIf="showUpdateMessage" class="alert alert-message" role="alert">
+    <div *ngIf="showUpdateMessage" class="error-message">
         <span [innerHTML]="updateMessage"></span>
     </div>
 </form>
 
 
-<h3>Delete a book: </h3>
+<h3>Delete a book </h3>
 <form (ngSubmit)="deleteBook(deleteBookForm)" [formGroup]="deleteBookForm">
     <div>
         <label>Id: </label>
@@ -52,15 +52,25 @@
 
     <input type="submit" value="Delete book">
 
-    <div *ngIf="showDeleteMessage" class="alert alert-message" role="alert">
+    <div *ngIf="showDeleteMessage" class="error-message">
         <span [innerHTML]="deleteMessage"></span>
     </div>
 </form>
 
 
-<h3 *ngFor="let book of books$ | async">
-    <p>Id: {{ book.id }}</p>
-    <p>{{ book.title }}</p>
-    <p>By {{ book.author }}</p>
-    <p>{{ book.price }} euros</p>
-</h3>
+<div id="editBooksDiv">
+    <h3 *ngFor="let book of books$ | async">
+        <p>ID: {{ book.id }}</p>
+        <p>Title: {{ book.title }}</p>
+        <p>Author: {{ book.author }}</p>
+        <p>Price: {{ book.price }} euros</p>
+    </h3>
+</div>
+
+
+<div *ngIf="showSuccessMessage" class="success-message-div">
+    <div class="success-message">
+        <span [innerHTML]="successMessage"></span>
+        <button (click)="hideSuccessMessage()">OK</button>
+    </div>
+</div>

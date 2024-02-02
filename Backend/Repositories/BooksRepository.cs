@@ -59,7 +59,7 @@ namespace OnlineBookShop.Repositories
             return book;
         }
 
-        public async Task<int> GetBookPrice(int id)
+        public async Task<float> GetBookPrice(int id)
         {
             var book = await _shopContext.Books.FirstOrDefaultAsync(b => b.Id == id);
             if (book == null)
@@ -74,7 +74,7 @@ namespace OnlineBookShop.Repositories
             return book;
         }
 
-        public async Task<Book>? PutBookAsync(int id, int newPrice)
+        public async Task<Book>? PutBookAsync(int id, float newPrice)
         {
             var book = await _shopContext.Books.FirstOrDefaultAsync(b => b.Id == id);
             if (book == null)

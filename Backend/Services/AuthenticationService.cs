@@ -25,9 +25,28 @@ namespace OnlineBookShop.Services
             _shopContext = shopContext;
         }
 
-        public async Task<IEnumerable<ApplicationUser>> GetUsers()
+        public async Task<IEnumerable<ApplicationUser>> GetUsers(string role)
         {
             var users = await _shopContext.ApplicationUsers.ToListAsync();
+            // return all application users
+            if (string.Equals(role, "all", StringComparison.OrdinalIgnoreCase))
+            {
+                return users;
+            }
+
+            // return application users without the admin role
+            if (string.Equals(role, "user", StringComparison.OrdinalIgnoreCase))
+            {
+                var admins = await _userManager.GetUsersInRoleAsync("Admin");
+                return users.Except(admins).ToList();
+            }
+
+            // return application users with the admin role
+            if (string.Equals(role, "admin", StringComparison.OrdinalIgnoreCase))
+            {
+                var admins = await _userManager.GetUsersInRoleAsync("Admin");
+                return admins;
+            }
             return users;
         }
 
@@ -99,45 +118,19 @@ namespace OnlineBookShop.Services
             return applicationUser;
         }
 
-        public async Task<ApplicationUser?> RegisterAdmin(CreateUser createUser)
+        public async Task<ApplicationUser?> PromoteUserToAdmin(ApplicationUser applicationUser)
         {
-            // create the user
-            ApplicationUser applicationUser = new()
-            {
-                FirstName = createUser.FirstName,
-                LastName = createUser.LastName,
-                UserName = createUser.UserName,
-                Email = createUser.Email,
-                SecurityStamp = Guid.NewGuid().ToString(),
-            };
-
-            var newUser = await _userManager.CreateAsync(applicationUser, createUser.Password);
-
-            if (!newUser.Succeeded)
-            {
-                return null;
-            }
-
-            // check if the roles exist
-            if (!await _roleManager.RoleExistsAsync(Roles.User))
-            {
-                await _roleManager.CreateAsync(new IdentityRole(Roles.User));
-            }
+            // check if the admin role exists
             if (!await _roleManager.RoleExistsAsync(Roles.Admin))
             {
                 await _roleManager.CreateAsync(new IdentityRole(Roles.Admin));
             }
 
-            // assign roles
-            if (await _roleManager.RoleExistsAsync(Roles.User))
-            {
-                await _userManager.AddToRoleAsync(applicationUser, Roles.User);
-            }
+            // assign admin role
             if (await _roleManager.RoleExistsAsync(Roles.Admin))
             {
                 await _userManager.AddToRoleAsync(applicationUser, Roles.Admin);
             }
-
             return applicationUser;
         }
     }

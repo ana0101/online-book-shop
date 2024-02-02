@@ -9,6 +9,7 @@ import { PaymentComponent } from './payment/payment.component';
 import { UserOrdersComponent } from './user-orders/user-orders.component';
 import { EditBooksComponent } from './edit-books/edit-books.component';
 import { EditOrdersComponent } from './edit-orders/edit-orders.component';
+import { EditUsersComponent } from './edit-users/edit-users.component';
 
 export const routes: Routes = [
     {
@@ -58,5 +59,11 @@ export const routes: Routes = [
         component: EditOrdersComponent,
         canActivate: [AuthGuard],
         data: { role: "Admin" } 
+    },
+    {
+        path: "edit-users",
+        component: EditUsersComponent,
+        canActivate: [AuthGuard],
+        data: { role: "Admin" }
     }
 ];

@@ -1,4 +1,3 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -8,7 +7,7 @@ import { CommonModule } from '@angular/common';
 import { Payment } from '../_interfaces/payment';
 import { CartService } from '../services/cart.service';
 import { AuthenticationService } from '../services/authentication.service';
-import { Observable, of, take } from 'rxjs';
+import { take } from 'rxjs';
 import { OrderService } from '../services/order.service';
 import { BookOrderService } from '../services/book-order.service';
 import { PaymentService } from '../services/payment.service';
@@ -28,15 +27,8 @@ export class PaymentComponent implements OnInit {
   paymentForm!: FormGroup;
   public errorMessage: string = '';
   public showError: boolean = false;
-
-  ngOnInit(): void {
-    const userId = localStorage.getItem("userId") || '';
-    this.getCarts(userId);
-
-    this.paymentForm = new FormGroup({
-      type: new FormControl('')
-    });
-  }
+  public successMessage: string = '';
+  public showSuccessMessage: boolean = false;
 
   private getCarts(userId: string): void {
     if (this.authService.isAuthenticated()) {
@@ -70,7 +62,7 @@ export class PaymentComponent implements OnInit {
         date: new Date(),
         city: localStorage.getItem("city") || '',
         address: localStorage.getItem("address") || '',
-        status: 'Received'
+        status: 'Placed'
       };
 
       var orderId: number;
@@ -97,8 +89,23 @@ export class PaymentComponent implements OnInit {
               localStorage.removeItem("address");
             })
         })
-
-      this.router.navigate(['/']);
+      
+      this.successMessage = "Order placed successfully";
+      this.showSuccessMessage = true;
     }
+  }
+
+  ngOnInit(): void {
+    const userId = localStorage.getItem("userId") || '';
+    this.getCarts(userId);
+
+    this.paymentForm = new FormGroup({
+      type: new FormControl('', Validators.required)
+    });
+  }
+
+  hideSuccessMessage(): void {
+    this.showSuccessMessage = false;
+    this.router.navigate(['/']);
   }
 }

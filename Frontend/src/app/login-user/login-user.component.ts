@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -19,9 +19,9 @@ export class LoginUserComponent implements OnInit {
   constructor(private loginService: LoginService, private router: Router) {}
 
   loginForm!: FormGroup;
-  public errorMessage: string = '';
-  public showError: boolean = false;
-  public invalidLogin: boolean = true;
+  errorMessage: string = '';
+  showErrorMessage: boolean = false;
+  invalidLogin: boolean = true;
 
   ngOnInit(): void {
       this.loginForm = new FormGroup({
@@ -33,7 +33,10 @@ export class LoginUserComponent implements OnInit {
   public loginUser(form: FormGroup): void {
     if (form.invalid) {
       this.errorMessage = "Invalid form";
-      this.showError = true;
+      this.showErrorMessage = true;
+      setTimeout(() => {
+        this.showErrorMessage = false;
+      }, 3000);
     }
     else {
       this.loginService.login(form.value).pipe(take(1)).subscribe({
@@ -49,14 +52,15 @@ export class LoginUserComponent implements OnInit {
           localStorage.setItem("userId", userId);
 
           this.invalidLogin = false;
-          console.log("Successful login");
-          console.log(token);
 
           this.router.navigate(['/']);
         },
         error: (err: HttpErrorResponse) => {
           this.errorMessage = err.error.message;
-          this.showError = true;
+          this.showErrorMessage = true;
+          setTimeout(() => {
+            this.showErrorMessage = false;
+          }, 3000);
           this.invalidLogin = true;
         }
       });

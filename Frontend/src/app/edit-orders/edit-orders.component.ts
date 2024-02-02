@@ -19,8 +19,14 @@ export class EditOrdersComponent implements OnInit {
 
   orders: { key: string, value: UserOrder[] }[] = [];
   updateStatusForm!: FormGroup;
-  public message: string = '';
-  public showMessage: boolean = false;
+  errorMessage: string = '';
+  showErrorMessage: boolean = false;
+  successMessage: string = '';
+  showSuccessMessage: boolean = false;
+
+  hideSuccessMessage(): void {
+    this.showSuccessMessage = false;
+  }
 
   getAllOrdersGroupedByUser() {
     this.orderService.getAllOrdersGroupedByUser().pipe(take(1)).subscribe((data: Record<string, UserOrder[]>) => {
@@ -30,28 +36,39 @@ export class EditOrdersComponent implements OnInit {
 
   getStatusOrdersGroupedByUser(event: Event) {
     var status = (event.target as HTMLSelectElement).value;
-    this.orderService.getStatusOrdersGroupedByUser(status).pipe(take(1)).subscribe((data: Record<string, UserOrder[]>) => {
-      this.orders = Object.entries(data).map(([key, value]) => ({ key, value }));
-    })
+    if (status.toLowerCase() == "all") {
+      this.getAllOrdersGroupedByUser();
+    }
+    else {
+      this.orderService.getStatusOrdersGroupedByUser(status).pipe(take(1)).subscribe((data: Record<string, UserOrder[]>) => {
+        this.orders = Object.entries(data).map(([key, value]) => ({ key, value }));
+      })
+    }
   }
 
   updateOrderStatus(form: FormGroup) {
     if (form.invalid) {
-      this.message = "Invalid form";
-      this.showMessage = true;
+      this.errorMessage = "Invalid form";
+      this.showErrorMessage = true;
+      setTimeout(() => {
+        this.showErrorMessage = false;
+      }, 3000);
     }
     else {
       const orderId = form.get('id')?.value;
       const newStatus = form.get('newStatus')?.value;
       this.orderService.updateOrderStatus(orderId, newStatus).pipe(take(1)).subscribe({
         next: () => {
-          this.message = "Order status updated succesfully";
-          this.showMessage = true;
+          this.successMessage = "Order status updated succesfully";
+          this.showSuccessMessage = true;
           this.getAllOrdersGroupedByUser();
         },
         error: (err: HttpErrorResponse) => {
-          this.message = err.error.message;
-          this.showMessage = true;
+          this.errorMessage = err.error.message;
+          this.showErrorMessage = true;
+          setTimeout(() => {
+            this.showErrorMessage = false;
+          }, 3000);
         }
       });
     }

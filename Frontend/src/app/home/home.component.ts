@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CartDto } from '../_interfaces/cart-dto';
@@ -21,6 +20,12 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router, private bookService: BookService, private cartService: CartService, private authService: AuthenticationService) {}
 
   books$: Observable<Book[]> = new Observable<Book[]>();
+  successMessage: string = '';
+  showSuccessMessage: boolean = false;
+
+  hideSuccessMessage(): void {
+    this.showSuccessMessage = false;
+  }
 
   getBooks() {
     this.books$ = this.bookService.getBooks();
@@ -45,6 +50,8 @@ export class HomeComponent implements OnInit {
       var quantity;
       this.cartService.getQuantity(userId, bookId).pipe(take(1)).subscribe((data) => {
         quantity = data;
+        this.successMessage = "Book added to cart";
+        this.showSuccessMessage = true;
 
         if (quantity != 0) {
           // increase the quantity

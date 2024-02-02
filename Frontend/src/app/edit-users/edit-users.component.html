@@ -1,0 +1,39 @@
+<h3>Promote a user to admin</h3>
+<form (ngSubmit)="promoteUserToAdmin(promoteUserToAdminForm)" [formGroup]="promoteUserToAdminForm">
+    <div>
+        <label>Email: </label>
+        <input formControlName="email" />
+    </div>
+
+    <input type="submit" value="Promote to admin">
+
+    <div *ngIf="showErrorMessage" class="error-message" role="alert">
+        <span [innerHTML]="errorMessage"></span>
+    </div>
+</form>
+
+<form>
+    <label for="role">Show users with this role: </label>
+    <select id="role" (change)="getUsers($event)">
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+        <option value="all">All users</option>
+    </select>
+</form>
+
+<div id="editUsersDiv">
+    <h3 *ngFor="let user of users$ | async">
+        <p>User ID: {{ user.id }}</p>
+        <p>First Name: {{ user.firstName }}</p>
+        <p>Last Name: {{ user.lastName }}</p>
+        <p>User Name: {{ user.userName }}</p>
+        <p>Email: {{ user.email }}</p>
+    </h3>
+</div>
+
+<div *ngIf="showSuccessMessage" class="success-message-div">
+    <div class="success-message">
+        <span [innerHTML]="successMessage"></span>
+        <button (click)="hideSuccessMessage()">OK</button>
+    </div>
+</div>
