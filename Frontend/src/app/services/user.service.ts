@@ -38,4 +38,13 @@ export class UserService {
     });
     return this.http.put<void>(url, email, {headers});
   }
+
+  deleteUser(email: string): Observable<void> {
+    const url = `${this.APIUrl}${email}`;
+    const token = localStorage.getItem("jwt");
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.delete<void>(url, {headers});
+  }
 }

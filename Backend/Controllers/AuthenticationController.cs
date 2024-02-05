@@ -120,5 +120,21 @@ namespace OnlineBookShop.Controllers
 
             return Ok(user);
         }
+
+        [HttpDelete("{email}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteUserAsync(string email)
+        {
+            // check if the user exists
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return StatusCode(StatusCodes.Status404NotFound,
+                    new Response { Status = "Error", Message = "There is no registered user with this email" });
+            }
+
+            await _userManager.DeleteAsync(user);
+            return NoContent();
+        }
     }
 }

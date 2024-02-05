@@ -43,6 +43,21 @@
 </form>
 
 
+<h3>Delete a book </h3>
+<form (ngSubmit)="deleteBook(deleteBookForm)" [formGroup]="deleteBookForm">
+    <div>
+        <label>Id: </label>
+        <input formControlName="id" />
+    </div>
+
+    <input type="submit" value="Delete book">
+
+    <div *ngIf="showDeleteMessage" class="error-message">
+        <span [innerHTML]="deleteMessage"></span>
+    </div>
+</form>
+
+
 <div id="editBooksDiv">
     <h3 *ngFor="let book of books$ | async">
         <p>ID: {{ book.id }}</p>

@@ -12,6 +12,20 @@
     </div>
 </form>
 
+<h3>Delete a user</h3>
+<form (ngSubmit)="deleteUser(deleteUserForm)" [formGroup]="deleteUserForm">
+    <div>
+        <label>Email: </label>
+        <input formControlName="email" />
+    </div>
+
+    <input type="submit" value="Delete user">
+
+    <div *ngIf="showDeleteMessage" class="error-message" role="alert">
+        <span [innerHTML]="deleteMessage"></span>
+    </div>
+</form>
+
 <form>
     <label for="role">Show users with this role: </label>
     <select id="role" (change)="getRoleUsers($event)">

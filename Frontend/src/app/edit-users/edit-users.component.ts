@@ -19,8 +19,11 @@ export class EditUsersComponent implements OnInit {
 
   users$: Observable<User[]> = new Observable<User[]>();
   promoteUserToAdminForm!: FormGroup;
+  deleteUserForm!: FormGroup;
   errorMessage: string = '';
   showErrorMessage: boolean = false;
+  deleteMessage: string = '';
+  showDeleteMessage: boolean = false;
   successMessage: string  = '';
   showSuccessMessage: boolean = false;
 
@@ -68,10 +71,40 @@ export class EditUsersComponent implements OnInit {
     }
   }
 
+  deleteUser(form: FormGroup): void {
+    if (form.invalid) {
+      this.deleteMessage = "Invalid form";
+      this.showDeleteMessage = true;
+      setTimeout(() => {
+        this.showDeleteMessage = false;
+      }, 3000);
+    }
+    else {
+      const email = form.get('email')?.value;
+      this.userService.deleteUser(email).pipe(take(1)).subscribe({
+        next: () => {
+          this.successMessage = "User deleted successfully";
+          this.showSuccessMessage = true;
+        },
+        error: (err: HttpErrorResponse) => {
+          this.deleteMessage = err.error.message || 'An error occurred';
+          this.showDeleteMessage = true;
+          setTimeout(() => {
+            this.showDeleteMessage = false;
+          }, 3000);
+        }
+      });
+    }
+  }
+
   ngOnInit(): void {
     this.getUsers();
-    
+
     this.promoteUserToAdminForm = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email])
+    });
+
+    this.deleteUserForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email])
     });
   }

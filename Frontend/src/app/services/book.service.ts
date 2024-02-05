@@ -1,7 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthenticationService } from './authentication.service';
 import { Book } from '../_interfaces/book';
 import { Observable } from 'rxjs';
 import { BookDto } from '../_interfaces/book-dto';
@@ -68,5 +66,14 @@ export class BookService {
       'Authorization': `Bearer ${token}`
     });
     return this.http.put<void>(url, newPrice, {headers});
+  }
+
+  deleteBook(bookId: number): Observable<void> {
+    const url = `${this.APIUrl}${bookId}`;
+    const token = localStorage.getItem("jwt");
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.delete<void>(url, {headers});
   }
 }
