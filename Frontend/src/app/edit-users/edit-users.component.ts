@@ -28,9 +28,18 @@ export class EditUsersComponent implements OnInit {
     this.showSuccessMessage = false;
   }
 
-  getUsers(event: Event) {
+  getUsers() {
+    this.users$ = this.userService.getUsers();
+  }
+
+  getRoleUsers(event: Event) {
     var role = (event.target as HTMLSelectElement).value;
-    this.users$ = this.userService.getUsers(role);
+    if (role == "all") {
+      this.getUsers();
+    }
+    else {
+      this.users$ = this.userService.getRoleUsers(role);
+    }
   }
 
   promoteUserToAdmin(form: FormGroup): void {
@@ -60,6 +69,8 @@ export class EditUsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getUsers();
+    
     this.promoteUserToAdminForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email])
     });

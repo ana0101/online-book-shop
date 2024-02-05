@@ -40,10 +40,10 @@
         <div *ngFor="let bookOrder of order.bookOrders">
             <p>{{ bookOrder.book.title }}</p>
             <p>By {{ bookOrder.book.author }}</p>
-            <p>Price: {{ bookOrder.price }}</p>
+            <p>Price: ${{ bookOrder.price }}</p>
             <p>Quantity: {{ bookOrder.quantity }}</p>
         </div>
-        <p>Total: {{ order.payment.total }} euros</p>
+        <p>Total: ${{ order.payment.total }}</p>
         <p>Date placed: {{ order.date | date: 'medium' }}</p>
         <p>Delivery city: {{ order.city }}</p>
         <p>Delivery address: {{ order.address }}</p>

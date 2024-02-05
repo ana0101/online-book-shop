@@ -25,14 +25,15 @@ namespace OnlineBookShop.Services
             _shopContext = shopContext;
         }
 
-        public async Task<IEnumerable<ApplicationUser>> GetUsers(string role)
+        public async Task<IEnumerable<ApplicationUser>> GetAllUsers()
         {
             var users = await _shopContext.ApplicationUsers.ToListAsync();
-            // return all application users
-            if (string.Equals(role, "all", StringComparison.OrdinalIgnoreCase))
-            {
-                return users;
-            }
+            return users;
+        }
+
+        public async Task<IEnumerable<ApplicationUser>> GetRoleUsers(string role)
+        {
+            var users = await _shopContext.ApplicationUsers.ToListAsync();
 
             // return application users without the admin role
             if (string.Equals(role, "user", StringComparison.OrdinalIgnoreCase))

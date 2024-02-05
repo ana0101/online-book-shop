@@ -83,33 +83,6 @@ export class EditBooksComponent implements OnInit {
     }
   }
 
-  deleteBook(form: FormGroup): void {
-    if (form.invalid) {
-      this.deleteMessage = "Invalid form";
-      this.showDeleteMessage = true;
-      setTimeout(() => {
-        this.showDeleteMessage = false;
-      }, 3000);
-    }
-    else {
-      const bookId = form.get('id')?.value;
-      this.bookService.deleteBook(bookId).pipe(take(1)).subscribe({
-        next: () => {
-          this.successMessage = "Book deleted successfully";
-          this.showSuccessMessage = true;
-          this.getBooks();
-        },
-        error: (err: HttpErrorResponse) => {
-          this.deleteMessage = err.error.message;
-          this.showDeleteMessage = true;
-          setTimeout(() => {
-            this.showDeleteMessage = false;
-          }, 3000);
-        }
-      });
-    }
-  }
-
   ngOnInit(): void {
     this.getBooks();
 
@@ -122,10 +95,6 @@ export class EditBooksComponent implements OnInit {
     this.updateBookPriceForm = new FormGroup({
       id: new FormControl('', Validators.required),
       price: new FormControl('', Validators.required)
-    });
-
-    this.deleteBookForm = new FormGroup({
-      id: new FormControl('', Validators.required)
     });
   }
 }

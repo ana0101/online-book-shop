@@ -4,10 +4,10 @@
         <div *ngFor="let bookOrder of userOrder.bookOrders">
             <p>{{ bookOrder.book.title }}</p>
             <p>By {{ bookOrder.book.author }}</p>
-            <p>Price: {{ bookOrder.price }}</p>
+            <p>Price: ${{ bookOrder.price }}</p>
             <p>Quantity: {{ bookOrder.quantity }}</p>
         </div>
-        <p>Total: {{ userOrder.payment.total }} euros</p>
+        <p>Total: ${{ userOrder.payment.total }}</p>
         <p>Date placed: {{ userOrder.date | date: 'medium' }}</p>
         <p>Delivery city: {{ userOrder.city }}</p>
         <p>Delivery address: {{ userOrder.address }}</p>

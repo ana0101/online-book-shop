@@ -14,10 +14,10 @@
 
 <form>
     <label for="role">Show users with this role: </label>
-    <select id="role" (change)="getUsers($event)">
+    <select id="role" (change)="getRoleUsers($event)">
+        <option value="all">All users</option>
         <option value="user">User</option>
         <option value="admin">Admin</option>
-        <option value="all">All users</option>
     </select>
 </form>
 

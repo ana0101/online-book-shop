@@ -20,11 +20,19 @@ namespace OnlineBookShop.Controllers
             _authenticationService = authenticationService;
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetAllUsersAsync()
+        {
+            var users = await _authenticationService.GetAllUsers();
+            return Ok(users);
+        }
+
         [HttpGet("{role}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> GetAllUsersAsync(string role)
+        public async Task<IActionResult> GetRoleUsersAsync(string role)
         {
-            var users = await _authenticationService.GetUsers(role);
+            var users = await _authenticationService.GetRoleUsers(role);
             return Ok(users);
         }
 

@@ -12,7 +12,16 @@ export class UserService {
 
   readonly APIUrl = "https://localhost:7202/api/Authentication/";
 
-  getUsers(role: string): Observable<User[]> {
+  getUsers(): Observable<User[]> {
+    const url = `${this.APIUrl}`;
+    const token = localStorage.getItem("jwt");
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<User[]>(url, {headers});
+  }
+
+  getRoleUsers(role: string): Observable<User[]> {
     const url = `${this.APIUrl}${role}`;
     const token = localStorage.getItem("jwt");
     const headers = new HttpHeaders({
