@@ -63,6 +63,10 @@ namespace OnlineBookShop.Controllers
             });
         }
 
+        // how to create first admin:
+        // create a normal user
+        // in AspNetUserRoles, add the admin role to the user
+
         // register a new user
         [HttpPost]
         [Route("register")]
