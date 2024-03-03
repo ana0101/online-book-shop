@@ -1,11 +1,16 @@
-# OnlineBookShop
-Web application for an online book shop using .net web core api for backend and angular for frontend
+# Online Book Shop
+This repo constains a web application for an online book shop
+
+Backend: ASP.NET Core Web API, C#, Microsoft SQL Server database
+
+Frontend: Angular, Typescript, HTML, SCSS
 
 
 Entities: Book, ApplicationUser, Cart, Order, BookOrder, Payment
 
 
 Relationships:
+
 Book M - ApplicationUser M => Cart
 
 ApplicationUser 1 - Order M
